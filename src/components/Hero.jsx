@@ -45,35 +45,35 @@ function Hero() {
   };
 
   return (
-    <section className="hero" aria-label="Hero section" style={{ position: "relative", zIndex: 10 }}>
+    <section className="hero" aria-label="Hero section">
       <Navigation variant="hero" />
 
-      {/* Hand-drawn signature — in front of notes layer */}
-      <div className="hero-signature">Charles@2026</div>
+      {/* Sticky note — always visible, pinned top-center on mobile */}
+      <div className="hero-sticky-note">
+        <p className="hero-sticky-note-text">
+          {stickyTyped}
+          <TypewriterCursor current={stickyTyped.length} total={STICKY_TEXT.length} />
+        </p>
+        <button
+          type="button"
+          className="hero-heart-btn"
+          onClick={handleHeartClick}
+          aria-label="Send love"
+        >
+          <Heart />
+          {heartCount ? <span className="hero-heart-count">{heartCount}</span> : null}
+        </button>
+      </div>
 
+      {/* Main card group */}
       <div className="hero-card-wrap">
-        {/* Sticky note tilted left */}
-        <div className="hero-sticky-note hero-sticky-note--left">
-          <p className="hero-sticky-note-text">
-            {stickyTyped}
-            <TypewriterCursor current={stickyTyped.length} total={STICKY_TEXT.length} />
-          </p>
-          <button
-            type="button"
-            className="hero-heart-btn"
-            onClick={handleHeartClick}
-            aria-label="Send love"
-          >
-            <Heart />
-            {heartCount ? <span className="hero-heart-count">{heartCount}</span> : null}
-          </button>
-        </div>
-
-        {/* Small accent note bottom-right of card */}
+        {/* Small accent note — desktop only */}
         <div className="hero-sticky-accent">stay curious ✦</div>
 
         <div className="hero-card">
           <h1>Welcome to my unorganized life</h1>
+          {/* Signature lives inside / below the card */}
+          <div className="hero-signature">Charles@2026</div>
         </div>
       </div>
 
@@ -110,11 +110,7 @@ function Hero() {
               {modalTyped}
               <TypewriterCursor current={modalTyped.length} total={MODAL_TEXT.length} />
             </p>
-            <button
-              type="button"
-              className="hero-love-modal-close"
-              onClick={() => setShowModal(false)}
-            >
+            <button type="button" className="hero-love-modal-close" onClick={() => setShowModal(false)}>
               Close
             </button>
           </div>

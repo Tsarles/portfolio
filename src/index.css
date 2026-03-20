@@ -1,14 +1,8 @@
 /* Reset */
  @keyframes bubbleFloat {
-     0% {
-         top: 0px;
-    }
-     50% {
-         top: -6px;
-    }
-     100% {
-         top: 0px;
-    }
+     0%   { transform: translateY(0px);   }
+     50%  { transform: translateY(-6px);  }
+     100% { transform: translateY(0px);   }
 }
  @keyframes floatY {
      0% {
@@ -56,7 +50,6 @@
      display: flex;
      align-items: center;
      justify-content: center;
-     animation: bubbleFloat 4s ease-in-out infinite;
 }
  .hero-card {
      position: relative;
@@ -486,7 +479,6 @@
      gap: 70px;
      padding: 40px;
      position: relative;
-     animation: bubbleFloat 4s ease-in-out infinite;
 }
 /* ABOUT CARDS */
  .about-card {
@@ -843,7 +835,6 @@
      padding: 60px 40px;
      background: var(--bg);
      position: relative;
-     animation: bubbleFloat 5s ease-in-out infinite;
 }
 /* BACK BUTTON */
  .back-btn {
@@ -1788,5 +1779,122 @@
   }
   .hero-sticky-accent {
     display: none;
+  }
+}
+
+/* ══════════════════════════════════════════
+   SIGNATURE — inside the hero card
+═══════════════════════════════════════════ */
+.hero-signature {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-top: 10px;
+  opacity: 0.75;
+  letter-spacing: 0.01em;
+  display: inline-block;
+  transform: rotate(-3deg);
+  position: relative;
+}
+.hero-signature::after {
+  content: "";
+  display: block;
+  height: 2px;
+  background: var(--green);
+  border-radius: 2px;
+  margin-top: 2px;
+  opacity: 0.4;
+  transform: scaleX(1.08);
+}
+
+/* ══════════════════════════════════════════
+   HERO STICKY NOTE — reset for both views
+═══════════════════════════════════════════ */
+/* Override old --left variant that may conflict */
+.hero-sticky-note--left {
+  transform: translate(-50%, -100%) rotate(-6deg) !important;
+}
+
+/* ══════════════════════════════════════════
+   MOBILE FIXES
+═══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Sticky note: always visible, pinned to top */
+  .hero-sticky-note {
+    position: fixed !important;
+    top: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 88vw !important;
+    max-width: 340px !important;
+    border-radius: 0 0 10px 10px !important;
+    padding: 12px 16px 16px !important;
+    z-index: 200 !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+  .hero-sticky-note-text {
+    flex: 1;
+    margin: 0 !important;
+    font-size: 0.82rem !important;
+    min-height: unset !important;
+    line-height: 1.4 !important;
+  }
+  .hero-sticky-note::after {
+    display: none !important;
+  }
+
+  /* Card wrap — push down so sticky note doesn't overlap */
+  .hero-card-wrap {
+    margin-top: 80px !important;
+  }
+
+  /* Accent note — hide on mobile to avoid clutter */
+  .hero-sticky-accent {
+    display: none !important;
+  }
+
+  /* Signature — inside card, smaller */
+  .hero-signature {
+    font-size: 1.2rem !important;
+  }
+
+  /* Viewer badge + CV btn — smaller + repositioned */
+  .viewer-badge {
+    bottom: 12px !important;
+    left: 12px !important;
+    font-size: 11px !important;
+    padding: 5px 10px !important;
+    transform: none !important;
+  }
+  .hero-cv-btn {
+    bottom: 12px !important;
+    right: 12px !important;
+    font-size: 13px !important;
+    padding: 8px 14px !important;
+    transform: none !important;
+  }
+
+  /* Reduce all floating animations to simple, lighter version */
+  .hero {
+    animation: none !important;
+  }
+  .about-page {
+    animation: none !important;
+  }
+}
+
+/* ══════════════════════════════════════════
+   REDUCE MOTION — respect system preference
+═══════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
