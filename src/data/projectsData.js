@@ -9,7 +9,7 @@ export const projects = [
     description:
       "A dare-based challenge web app — pick a challenge, compete with friends, and see who pulls off the impossible. CHALLENGE · DARE · WIN",
     tech: ["React", "CSS", "JavaScript"],
-    link: "https://betyoucant.netlify.app/",
+    link: "https://bet-you-cant.vercel.app/",
     image: betYouCantImg,
     featured: true,
     docs: {
