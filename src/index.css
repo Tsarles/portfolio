@@ -400,18 +400,7 @@
          width: 90%;
          max-width: 360px;
     }
-     .hero-sticky-note {
-         position: fixed;
-         top: 0;
-         left: 50%;
-         width: 180px;
-         padding: 14px 16px 24px;
-         margin: 0;
-         transform: translate(-50%, 0) rotate(-2deg);
-         z-index: 100;
-         border-radius: 0 0 8px 8px;
-         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
-    }
+     /* hero-sticky-note handled by mobile-layout */
      .hero-sticky-note::after {
          display: none;
     }
@@ -441,26 +430,10 @@
          height: 60px;
          white-space: nowrap;
     }
-     .about {
-         top: 28%;
-         left: 4%;
-         animation: icon-float-about 4.5s ease-in-out 0s infinite;
-    }
-     .projects {
-         top: 62%;
-         left: 4%;
-         animation: icon-float-projects 5s ease-in-out 0.8s infinite;
-    }
-     .contact {
-         top: 28%;
-         right: 4%;
-         animation: icon-float-contact 4.8s ease-in-out 1.4s infinite;
-    }
-     .resume {
-         top: 62%;
-         right: 4%;
-         animation: icon-float-resume 5.2s ease-in-out 2s infinite;
-    }
+     .about { }
+     .projects { }
+     .contact { }
+     .resume { }
      .left-note {
          font-size: 20px;
          bottom: 60%;
@@ -2057,5 +2030,462 @@
     animation-play-state: paused !important;
     transform: rotate(10deg) scale(1.15) !important;
     box-shadow: 8px 8px 0 var(--border) !important;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   DESKTOP NAV WRAPPER — hide on mobile
+════════════════════════════════════════════════ */
+.hero-desktop-nav {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+.hero-desktop-nav .icon-nav {
+  pointer-events: all;
+}
+
+/* ════════════════════════════════════════════════
+   MOBILE DOCK — hidden on desktop
+════════════════════════════════════════════════ */
+.hero-mobile-dock {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* ── Kill ALL old floating icon behaviour on mobile ── */
+  .hero-desktop-nav {
+    display: none !important;
+  }
+
+  /* ── Full page layout: flex column, everything stacked ── */
+  .hero {
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    padding: 0 0 80px 0 !important;
+    animation: none !important;
+    min-height: 100svh !important;
+  }
+
+  /* ── Sticky note: small strip at top, row layout ── */
+  .hero-sticky-note {
+    position: relative !important;
+    top: auto !important; left: auto !important;
+    transform: rotate(-1.5deg) !important;
+    width: calc(100% - 32px) !important;
+    max-width: 420px !important;
+    margin: 20px auto 0 !important;
+    padding: 10px 14px 14px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    display: flex !important;
+    z-index: 10 !important;
+    border-radius: 6px !important;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.12) !important;
+  }
+  .hero-sticky-note::after {
+    display: none !important;
+  }
+  .hero-sticky-note-text {
+    flex: 1 !important;
+    margin: 0 !important;
+    font-size: 0.82rem !important;
+    min-height: unset !important;
+    line-height: 1.4 !important;
+  }
+  .hero-heart-btn {
+    flex-shrink: 0 !important;
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  /* ── Two notes side by side below the sticky note ── */
+  /* Handled in ScatteredNotes with mobile layout */
+
+  /* ── Card wrap: centered, not floating ── */
+  .hero-card-wrap {
+    position: relative !important;
+    margin-top: 18px !important;
+    width: calc(100% - 32px) !important;
+    max-width: 420px !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  /* ── Main card: subtle tilt, no giant shadow ── */
+  .hero-card {
+    width: 100% !important;
+    transform: rotate(-3deg) !important;
+    padding: 28px 22px !important;
+    box-shadow: 8px 8px 0 var(--border), 12px 12px 0 rgba(0,0,0,0.12) !important;
+  }
+  .hero-card h1 {
+    font-size: clamp(1.4rem, 6vw, 1.8rem) !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Accent note: hide on mobile */
+  .hero-sticky-accent {
+    display: none !important;
+  }
+
+  /* ── Signature below card ── */
+  .hero-signature {
+    font-size: 1.3rem !important;
+    margin-top: 12px !important;
+    transform: rotate(-2deg) !important;
+    align-self: center !important;
+  }
+
+  /* ── Viewer + CV: small row at very bottom ── */
+  .viewer-badge {
+    position: fixed !important;
+    bottom: 74px !important;
+    left: 14px !important;
+    font-size: 11px !important;
+    padding: 5px 10px !important;
+    transform: none !important;
+    z-index: 101 !important;
+  }
+  .hero-cv-btn {
+    position: fixed !important;
+    bottom: 74px !important;
+    right: 14px !important;
+    font-size: 13px !important;
+    padding: 8px 14px !important;
+    transform: none !important;
+    z-index: 101 !important;
+  }
+
+  /* ── Mobile dock: fixed bottom bar ── */
+  .hero-mobile-dock {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 66px !important;
+    background: var(--paper) !important;
+    border-top: 3px solid var(--border) !important;
+    z-index: 200 !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    padding: 0 8px !important;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.08) !important;
+  }
+
+  .dock-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    flex: 1 !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 6px 4px !important;
+    font-family: "Architects Daughter", cursive !important;
+    color: var(--ink) !important;
+    border-radius: 10px !important;
+    transition: background 0.15s ease !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  .dock-item:active {
+    background: var(--paper-soft) !important;
+  }
+  .dock-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 10px !important;
+    background: white !important;
+    box-shadow: 2px 2px 0 var(--border) !important;
+  }
+  .dock-label {
+    font-size: 10px !important;
+    color: var(--ink) !important;
+    font-weight: normal !important;
+    line-height: 1 !important;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   MOBILE FLOW LAYOUT WRAPPER
+════════════════════════════════════════════════ */
+.hero-mobile-layout {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hero-mobile-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 16px 16px 80px;
+    gap: 0;
+    min-height: 100svh;
+    box-sizing: border-box;
+  }
+
+  /* Sticky note in flow */
+  .hero-mobile-layout .hero-sticky-note {
+    position: relative !important;
+    top: auto !important; left: auto !important;
+    transform: rotate(-2deg) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 0 0 !important;
+    padding: 10px 14px 14px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    display: flex !important;
+    z-index: 10 !important;
+    border-radius: 4px !important;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.12) !important;
+  }
+  .hero-mobile-layout .hero-sticky-note::after {
+    display: none !important;
+  }
+  .hero-mobile-layout .hero-sticky-note-text {
+    flex: 1;
+    margin: 0 !important;
+    font-size: 0.82rem !important;
+    min-height: unset !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Card wrap in flow */
+  .hero-mobile-layout .hero-card-wrap {
+    position: relative !important;
+    margin-top: 14px !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .hero-mobile-layout .hero-card {
+    width: 100% !important;
+    transform: rotate(-3deg) !important;
+    padding: 26px 20px !important;
+    box-shadow: 7px 7px 0 var(--border), 11px 11px 0 rgba(0,0,0,0.12) !important;
+  }
+  .hero-mobile-layout .hero-card h1 {
+    font-size: clamp(1.35rem, 6vw, 1.7rem) !important;
+    line-height: 1.25 !important;
+  }
+
+  .hero-mobile-layout .hero-signature {
+    font-size: 1.25rem !important;
+    margin-top: 10px !important;
+    transform: rotate(-2deg) !important;
+  }
+
+  /* Bottom row: views + download */
+  .hero-bottom-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 18px;
+    gap: 10px;
+  }
+  .hero-bottom-row .viewer-badge {
+    flex-shrink: 0;
+  }
+  .hero-bottom-row .hero-cv-btn {
+    flex-shrink: 0;
+  }
+
+  /* On mobile desktop layout is hidden — hide those sticky elements */
+  .hero > .hero-sticky-note:not(.hero-mobile-layout .hero-sticky-note),
+  .hero > .hero-card-wrap:not(.hero-mobile-layout .hero-card-wrap),
+  .hero > .viewer-badge,
+  .hero > .hero-cv-btn {
+    display: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   FINAL MOBILE OVERRIDE — applied last, wins all
+════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+
+  /* 1. Kill desktop floating icons completely */
+  .hero-desktop-nav,
+  .hero-desktop-nav * {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  /* 2. Kill desktop scattered notes (fixed position ones) */
+  body > div[aria-hidden="true"],
+  .hero > div[aria-hidden="true"] {
+    display: none !important;
+  }
+
+  /* 3. Hero section: plain column, no absolute positioning chaos */
+  .hero {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    min-height: 100svh !important;
+    padding: 0 !important;
+    animation: none !important;
+    overflow-x: hidden !important;
+  }
+
+  /* 4. Mobile layout wrapper: visible, full column */
+  .hero-mobile-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 14px 16px 88px !important;
+    gap: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 5. Sticky note: centered, top of layout, not fixed */
+  .hero-mobile-layout .hero-sticky-note {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: rotate(-2deg) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 11px 14px 15px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    z-index: 10 !important;
+    border-radius: 5px !important;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.13) !important;
+    background: #fef9c3 !important;
+    border: 2px solid #2a2a2a !important;
+  }
+  .hero-mobile-layout .hero-sticky-note::after {
+    display: none !important;
+  }
+  .hero-mobile-layout .hero-sticky-note-text {
+    flex: 1 !important;
+    margin: 0 !important;
+    font-size: 0.83rem !important;
+    min-height: unset !important;
+    line-height: 1.4 !important;
+  }
+  .hero-mobile-layout .hero-heart-btn {
+    flex-shrink: 0 !important;
+    width: 38px !important;
+    height: 38px !important;
+    min-width: 38px !important;
+    min-height: 38px !important;
+  }
+
+  /* 6. Card */
+  .hero-mobile-layout .hero-card {
+    width: 100% !important;
+    transform: rotate(-3deg) !important;
+    padding: 26px 20px !important;
+    box-shadow: 7px 7px 0 #000, 11px 11px 0 rgba(0,0,0,0.12) !important;
+  }
+  .hero-mobile-layout .hero-card h1 {
+    font-size: clamp(1.3rem, 5.5vw, 1.7rem) !important;
+    line-height: 1.25 !important;
+  }
+  .hero-mobile-layout .hero-card-wrap {
+    width: 100% !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 0 !important;
+  }
+  .hero-mobile-layout .hero-signature {
+    font-size: 1.25rem !important;
+    margin-top: 10px !important;
+    transform: rotate(-2deg) !important;
+    opacity: 0.75 !important;
+  }
+
+  /* 7. Bottom row */
+  .hero-bottom-row {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-top: 4px !important;
+  }
+
+  /* 8. Dock */
+  .hero-mobile-dock {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 0 !important; left: 0 !important; right: 0 !important;
+    height: 64px !important;
+    background: var(--paper) !important;
+    border-top: 3px solid var(--border) !important;
+    z-index: 9000 !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    padding: 0 4px !important;
+    box-shadow: 0 -3px 10px rgba(0,0,0,0.08) !important;
+  }
+  .dock-item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 3px !important;
+    flex: 1 !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    padding: 5px 2px !important;
+    font-family: "Architects Daughter", cursive !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  .dock-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 34px !important;
+    height: 34px !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 9px !important;
+    background: white !important;
+    box-shadow: 2px 2px 0 var(--border) !important;
+    color: var(--ink) !important;
+  }
+  .dock-label {
+    font-size: 9px !important;
+    color: var(--ink) !important;
+    line-height: 1 !important;
+    font-family: "Architects Daughter", cursive !important;
+  }
+
+  /* 9. Hide desktop-only stuff that might still render */
+  .hero > .hero-sticky-note,
+  .hero > .hero-card-wrap,
+  .hero > .viewer-badge,
+  .hero > .hero-cv-btn,
+  .hero-sticky-accent {
+    display: none !important;
   }
 }
