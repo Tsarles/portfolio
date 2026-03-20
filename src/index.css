@@ -212,30 +212,45 @@
 }
 /* LEFT SIDE */
  .about {
-     top: 20%;
-     left: 20%;
-     transform: rotate(19deg);
+     top: 22%;
+     left: 12%;
+     animation: icon-float-about 4.5s ease-in-out 0s infinite;
 }
  .projects {
-     top: 60%;
-     left: 18%;
-     transform: rotate(-29deg);
+     top: 62%;
+     left: 9%;
+     animation: icon-float-projects 5s ease-in-out 0.8s infinite;
 }
 /* RIGHT SIDE */
  .contact {
-     top: 16%;
-     right: 24%;
-     transform: rotate(-29deg);
+     top: 18%;
+     right: 11%;
+     animation: icon-float-contact 4.8s ease-in-out 1.4s infinite;
 }
  .resume {
-     top: 68%;
-     right: 20%;
-     transform: rotate(-35deg);
+     top: 65%;
+     right: 8%;
+     animation: icon-float-resume 5.2s ease-in-out 2.0s infinite;
 }
- @keyframes icon-wobble {
-     0%,100% { transform: rotate(-4deg) translateY(0px);  }
-     25%      { transform: rotate(4deg)  translateY(-4px); }
-     75%      { transform: rotate(-3deg) translateY(-2px); }
+ @keyframes icon-float-about {
+     0%,100% { transform: rotate(12deg)  translateY(0px);  }
+     40%      { transform: rotate(16deg)  translateY(-7px); }
+     70%      { transform: rotate(10deg)  translateY(-3px); }
+}
+ @keyframes icon-float-projects {
+     0%,100% { transform: rotate(-18deg) translateY(0px);  }
+     40%      { transform: rotate(-22deg) translateY(-6px); }
+     70%      { transform: rotate(-15deg) translateY(-2px); }
+}
+ @keyframes icon-float-contact {
+     0%,100% { transform: rotate(-14deg) translateY(0px);  }
+     40%      { transform: rotate(-10deg) translateY(-8px); }
+     70%      { transform: rotate(-17deg) translateY(-4px); }
+}
+ @keyframes icon-float-resume {
+     0%,100% { transform: rotate(20deg)  translateY(0px);  }
+     40%      { transform: rotate(16deg)  translateY(-5px); }
+     70%      { transform: rotate(22deg)  translateY(-2px); }
 }
  .icon-nav {
      position: absolute;
@@ -251,7 +266,6 @@
      cursor: pointer;
      box-shadow: 6px 6px 0 var(--border), 10px 10px 0 rgba(0, 0, 0, 0.15);
      transition: transform 0.2s ease, box-shadow 0.2s ease;
-     animation: icon-wobble 4s ease-in-out infinite;
 }
  .icon-nav svg {
      width: 55px;
@@ -428,20 +442,24 @@
          white-space: nowrap;
     }
      .about {
-         top: 18%;
-         left: 20%;
+         top: 28%;
+         left: 4%;
+         animation: icon-float-about 4.5s ease-in-out 0s infinite;
     }
      .projects {
-         top: 80%;
-         left: 10%;
+         top: 62%;
+         left: 4%;
+         animation: icon-float-projects 5s ease-in-out 0.8s infinite;
     }
      .contact {
-         top: 12%;
-         right: 20%;
+         top: 28%;
+         right: 4%;
+         animation: icon-float-contact 4.8s ease-in-out 1.4s infinite;
     }
      .resume {
-         top: 75%;
-         right: 25%;
+         top: 62%;
+         right: 4%;
+         animation: icon-float-resume 5.2s ease-in-out 2s infinite;
     }
      .left-note {
          font-size: 20px;
@@ -609,7 +627,9 @@
      animation-delay: 2.1s;
 }
  .icon-nav:hover {
-     transform: rotate(10deg) scale(1.2);
+     animation-play-state: paused;
+     filter: brightness(1.04);
+     box-shadow: 8px 8px 0 var(--border), 14px 14px 0 rgba(0,0,0,0.18);
 }
 /* NAV SHOW / HIDE */
  .about-side-nav.nav-closed {
@@ -1619,30 +1639,20 @@
    HERO SIGNATURE — hand-drawn style
 ═══════════════════════════════════════════ */
 .hero-signature {
-  position: absolute;
-  bottom: 16%;
-  right: 7%;
-  font-family: "Dancing Script", cursive;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #06771f;
-  transform: rotate(-7deg);
-  pointer-events: none;
-  opacity: 0.82;
-  letter-spacing: 0.01em;
-  text-shadow: 1px 2px 0 rgba(0,0,0,0.08);
-  z-index: 5;
+  font-family: "Architects Daughter", cursive;
+  font-size: 1.4rem;
+  color: var(--green);
+  text-align: center;
+  margin-top: 14px;
+  opacity: 0.78;
+  transform: rotate(-3deg);
+  display: block;
+  position: relative;
+  letter-spacing: 0.04em;
 }
 /* Underline scribble via ::after */
 .hero-signature::after {
-  content: "";
-  display: block;
-  height: 3px;
-  background: #06771f;
-  border-radius: 2px;
-  margin-top: 2px;
-  opacity: 0.55;
-  transform: rotate(-1deg) scaleX(1.05);
+  display: none;
 }
 
 /* ══════════════════════════════════════════
@@ -1976,10 +1986,10 @@
   }
   .icon-nav svg { width: 28px !important; }
 
-  .hero .about   { top: 68% !important; left: 6%  !important; transform: rotate(-8deg) !important; animation: none !important; }
-  .hero .projects{ top: 82% !important; left: 4%  !important; transform: rotate(5deg)  !important; animation: none !important; }
-  .hero .contact { top: 62% !important; right: 4% !important; transform: rotate(6deg)  !important; animation: none !important; }
-  .hero .resume  { top: 78% !important; right: 6% !important; transform: rotate(-7deg) !important; animation: none !important; }
+  .hero .about    { top: 25% !important; left: 5%  !important; animation: icon-float-about 4.5s ease-in-out 0s infinite !important; }
+  .hero .projects { top: 64% !important; left: 3%  !important; animation: icon-float-projects 5s ease-in-out 0.8s infinite !important; }
+  .hero .contact  { top: 25% !important; right: 5% !important; animation: icon-float-contact 4.8s ease-in-out 1.4s infinite !important; }
+  .hero .resume   { top: 64% !important; right: 3% !important; animation: icon-float-resume 5.2s ease-in-out 2s infinite !important; }
 
   /* Badges */
   .viewer-badge {
@@ -2023,10 +2033,10 @@
   .hero-card { transform: rotate(-4deg) !important; }
 
   /* Icons tilted */
-  .hero .about    { top: 72% !important; left: 8%   !important; transform: rotate(-6deg) !important; }
-  .hero .projects { top: 84% !important; left: 6%   !important; transform: rotate(4deg)  !important; }
-  .hero .contact  { top: 68% !important; right: 6%  !important; transform: rotate(7deg)  !important; }
-  .hero .resume   { top: 80% !important; right: 8%  !important; transform: rotate(-5deg) !important; }
+  .hero .about    { top: 25% !important; left: 5%  !important; animation: icon-float-about 4.5s ease-in-out 0s infinite !important; }
+  .hero .projects { top: 64% !important; left: 3%  !important; animation: icon-float-projects 5s ease-in-out 0.8s infinite !important; }
+  .hero .contact  { top: 25% !important; right: 5% !important; animation: icon-float-contact 4.8s ease-in-out 1.4s infinite !important; }
+  .hero .resume   { top: 64% !important; right: 3% !important; animation: icon-float-resume 5.2s ease-in-out 2s infinite !important; }
 }
 
 /* ════════════════════════════════════════════════
