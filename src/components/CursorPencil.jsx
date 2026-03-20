@@ -2,109 +2,116 @@ import { useRef, useEffect } from "react";
 
 function CursorPencil() {
   const canvasRef = useRef(null);
-  const lastPos = useRef({ x: 0, y: 0 });
-  const hasMoved = useRef(false);
-  const clearIntervalRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext("2d");
 
+    // ── Resize with DPR ──
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      canvas.style.width = `${w}px`;
-      canvas.style.height = `${h}px`;
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
       ctx.scale(dpr, dpr);
+    };
+
+    // ── State ──
+    const pts = [];          // circular buffer of {x,y} points
+    const MAX_PTS = 28;
+    let alpha = 0;           // current ink opacity
+    let rafId = null;
+    let fadeTimer = null;
+    let fadingRaf = null;
+
+    // ── Draw one frame using quadratic bezier through midpoints ──
+    const render = () => {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      if (pts.length < 2 || alpha <= 0) return;
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.strokeStyle = "#155d29";
+      ctx.lineWidth = 2.4;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
-    };
+      ctx.shadowColor = "rgba(0,0,0,0.18)";
+      ctx.shadowBlur = 1.5;
 
-    const getCoords = (e) => ({
-      x: e.clientX,
-      y: e.clientY,
-    });
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
 
-    const getCoordsTouch = (e) => {
-      if (!e.touches || !e.touches.length) return lastPos.current;
-      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    };
-
-    const draw = (x, y) => {
-      if (!ctx) return;
-      const pos = { x, y };
-      if (hasMoved.current) {
-        ctx.globalAlpha = 0.72;
-        ctx.strokeStyle = "#155d29";
-        ctx.shadowColor = "rgba(0, 0, 0, 0.12)";
-        ctx.shadowBlur = 1;
-        ctx.lineWidth = 3.5;
-        ctx.beginPath();
-        ctx.moveTo(lastPos.current.x, lastPos.current.y);
-        ctx.lineTo(pos.x, pos.y);
-        ctx.stroke();
-        ctx.globalAlpha = 1;
-        ctx.shadowBlur = 0;
+      // Smooth catmull-rom-style: draw through midpoints
+      for (let i = 0; i < pts.length - 1; i++) {
+        const mx = (pts[i].x + pts[i + 1].x) / 2;
+        const my = (pts[i].y + pts[i + 1].y) / 2;
+        ctx.quadraticCurveTo(pts[i].x, pts[i].y, mx, my);
       }
-      hasMoved.current = true;
-      lastPos.current = pos;
+      ctx.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
+      ctx.stroke();
+      ctx.restore();
     };
 
-    const clearCanvas = () => {
-      if (!ctx || !canvas) return;
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      ctx.clearRect(0, 0, w, h);
+    // ── RAF loop ──
+    const loop = () => {
+      render();
+      rafId = requestAnimationFrame(loop);
     };
 
-    const handleMouseMove = (e) => {
-      draw(e.clientX, e.clientY);
+    // ── Fade out after idle ──
+    const scheduleFade = () => {
+      if (fadeTimer) clearTimeout(fadeTimer);
+      if (fadingRaf) cancelAnimationFrame(fadingRaf);
+
+      fadeTimer = setTimeout(() => {
+        const fade = () => {
+          alpha = Math.max(0, alpha - 0.04);
+          if (alpha <= 0) { pts.length = 0; return; }
+          fadingRaf = requestAnimationFrame(fade);
+        };
+        fadingRaf = requestAnimationFrame(fade);
+      }, 350);
     };
 
-    const handleTouchMove = (e) => {
-      e.preventDefault();
-      const { x, y } = getCoordsTouch(e);
-      draw(x, y);
+    // ── Mouse handler ──
+    const handleMove = (e) => {
+      const x = e.clientX;
+      const y = e.clientY;
+      pts.push({ x, y });
+      if (pts.length > MAX_PTS) pts.shift();
+      alpha = 0.75;
+      scheduleFade();
     };
 
-    const resetTrail = () => {
-      hasMoved.current = false;
+    const handleLeave = () => {
+      alpha = 0;
+      pts.length = 0;
     };
 
     resize();
     window.addEventListener("resize", resize);
-
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseleave", resetTrail);
-
-    canvas.addEventListener("touchmove", handleTouchMove, { passive: false });
-    window.addEventListener("touchstart", resetTrail);
-
-    clearIntervalRef.current = setInterval(clearCanvas, 320);
+    window.addEventListener("mousemove", handleMove, { passive: true });
+    window.addEventListener("mouseleave", handleLeave);
+    rafId = requestAnimationFrame(loop);
 
     return () => {
       window.removeEventListener("resize", resize);
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseleave", resetTrail);
-      canvas.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchstart", resetTrail);
-      if (clearIntervalRef.current) clearInterval(clearIntervalRef.current);
+      window.removeEventListener("mousemove", handleMove);
+      window.removeEventListener("mouseleave", handleLeave);
+      if (rafId) cancelAnimationFrame(rafId);
+      if (fadingRaf) cancelAnimationFrame(fadingRaf);
+      if (fadeTimer) clearTimeout(fadeTimer);
     };
   }, []);
 
   return (
     <canvas
       ref={canvasRef}
-      className="cursor-pencil-canvas"
       style={{
         position: "fixed",
-        top: 0,
-        left: 0,
+        top: 0, left: 0,
         pointerEvents: "none",
         zIndex: 99999,
       }}

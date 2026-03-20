@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { Heart } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Heart, Eye } from "lucide-react";
 import Navigation from "./Navigation";
 import { useTypewriter } from "../hooks/useTypewriter";
+import cvFile from "../assets/images/CvCharles.pdf";
 
 const STICKY_TEXT = "Hope you have a nice wonderful day : )";
-const MODAL_TEXT = "Hope you loved your self the way you give love to others";
+const MODAL_TEXT  = "Hope you loved your self the way you give love to others";
 
 function TypewriterCursor({ current, total }) {
   if (current >= total) return null;
@@ -12,23 +13,47 @@ function TypewriterCursor({ current, total }) {
 }
 
 function Hero() {
-  const [heartCount, setHeartCount] = useState(0);
+  const [heartCount, setHeartCount] = useState(() => {
+    const saved = localStorage.getItem("portfolio-hearts");
+    return saved ? parseInt(saved, 10) : 0;
+  });
   const [showModal, setShowModal] = useState(false);
+  const [viewerCount, setViewerCount] = useState(null);
 
   const stickyTyped = useTypewriter(STICKY_TEXT, 75, true);
-  const modalTyped = useTypewriter(MODAL_TEXT, 42, showModal);
+  const modalTyped  = useTypewriter(MODAL_TEXT, 42, showModal);
+
+  useEffect(() => {
+    fetch("https://api.counterapi.dev/v1/tsarles2026-portfolio/views/up")
+      .then((r) => r.json())
+      .then((d) => setViewerCount(d.count))
+      .catch(() => setViewerCount(null));
+  }, []);
 
   const handleHeartClick = () => {
-    setHeartCount((c) => c + 1);
+    const next = heartCount + 1;
+    setHeartCount(next);
+    localStorage.setItem("portfolio-hearts", next);
     setShowModal(true);
   };
 
+  const handleDownloadCV = () => {
+    const a = document.createElement("a");
+    a.href = cvFile;
+    a.download = "Charles_Cabral_CV.pdf";
+    a.click();
+  };
+
   return (
-    <section className="hero" aria-label="Hero section">
+    <section className="hero" aria-label="Hero section" style={{ position: "relative", zIndex: 10 }}>
       <Navigation variant="hero" />
 
+      {/* Hand-drawn signature — in front of notes layer */}
+      <div className="hero-signature">Charles@2026</div>
+
       <div className="hero-card-wrap">
-        <div className="hero-sticky-note">
+        {/* Sticky note tilted left */}
+        <div className="hero-sticky-note hero-sticky-note--left">
           <p className="hero-sticky-note-text">
             {stickyTyped}
             <TypewriterCursor current={stickyTyped.length} total={STICKY_TEXT.length} />
@@ -44,14 +69,33 @@ function Hero() {
           </button>
         </div>
 
+        {/* Small accent note bottom-right of card */}
+        <div className="hero-sticky-accent">stay curious ✦</div>
+
         <div className="hero-card">
           <h1>Welcome to my unorganized life</h1>
         </div>
       </div>
 
-      <p className="note left-note">Enjoy to discover stuff about me!</p>
-      <p className="note signature">@Tsarles2026</p>
+      {/* Viewer count */}
+      {viewerCount !== null && (
+        <div className="viewer-badge">
+          <Eye size={14} />
+          <span>{viewerCount.toLocaleString()} {viewerCount === 1 ? "view" : "views"}</span>
+        </div>
+      )}
 
+      {/* CV Download */}
+      <button
+        type="button"
+        className="hero-cv-btn"
+        onClick={handleDownloadCV}
+        aria-label="Download CV"
+      >
+        Download CV
+      </button>
+
+      {/* Love modal */}
       {showModal && (
         <div
           className="hero-love-modal-overlay"
@@ -61,10 +105,7 @@ function Hero() {
           tabIndex={0}
           aria-label="Close modal"
         >
-          <div
-            className="hero-love-modal"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="hero-love-modal" onClick={(e) => e.stopPropagation()}>
             <p className="hero-love-modal-text">
               {modalTyped}
               <TypewriterCursor current={modalTyped.length} total={MODAL_TEXT.length} />

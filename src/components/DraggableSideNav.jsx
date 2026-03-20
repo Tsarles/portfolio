@@ -5,11 +5,12 @@ function DraggableSideNav() {
   const [navVisible, setNavVisible] = useState(false);
   const [noteHidden, setNoteHidden] = useState(false);
 
-  const navRef = useRef(null);
+  const wrapRef = useRef(null);
   const position = useRef({ x: 0, y: 0 });
   const dragging = useRef(false);
   const offset = useRef({ x: 0, y: 0 });
   const hasMoved = useRef(false);
+  const didToggle = useRef(false);
 
   const getClientPos = (e) => {
     if (e.touches && e.touches.length) {
@@ -19,13 +20,14 @@ function DraggableSideNav() {
   };
 
   useEffect(() => {
-    const nav = navRef.current;
-    if (!nav) return;
+    const wrap = wrapRef.current;
+    if (!wrap) return;
 
     const startDrag = (e) => {
       const pos = getClientPos(e);
       dragging.current = true;
       hasMoved.current = false;
+      didToggle.current = false;
       offset.current = {
         x: pos.x - position.current.x,
         y: pos.y - position.current.y,
@@ -39,11 +41,12 @@ function DraggableSideNav() {
       const pos = getClientPos(e);
       const newX = pos.x - offset.current.x;
       const newY = pos.y - offset.current.y;
-      if (Math.abs(newX - position.current.x) > 2 || Math.abs(newY - position.current.y) > 2) {
+      if (Math.abs(newX - position.current.x) > 3 || Math.abs(newY - position.current.y) > 3) {
         hasMoved.current = true;
       }
       position.current = { x: newX, y: newY };
-      nav.style.transform = `translate(${position.current.x}px, ${position.current.y}px)`;
+      wrap.style.setProperty("--drag-x", `${newX}px`);
+      wrap.style.setProperty("--drag-y", `${newY}px`);
     };
 
     const endDrag = () => {
@@ -54,23 +57,16 @@ function DraggableSideNav() {
       document.body.style.userSelect = "auto";
     };
 
-    const handleMouseDown = (e) => {
-      startDrag(e);
-    };
-    const handleTouchStart = (e) => {
-      startDrag(e);
-    };
-
-    nav.addEventListener("mousedown", handleMouseDown);
-    nav.addEventListener("touchstart", handleTouchStart, { passive: true });
+    wrap.addEventListener("mousedown", startDrag);
+    wrap.addEventListener("touchstart", startDrag, { passive: true });
     window.addEventListener("mousemove", moveDrag);
     window.addEventListener("touchmove", moveDrag, { passive: false });
     window.addEventListener("mouseup", endDrag);
     window.addEventListener("touchend", endDrag);
 
     return () => {
-      nav.removeEventListener("mousedown", handleMouseDown);
-      nav.removeEventListener("touchstart", handleTouchStart);
+      wrap.removeEventListener("mousedown", startDrag);
+      wrap.removeEventListener("touchstart", startDrag);
       window.removeEventListener("mousemove", moveDrag);
       window.removeEventListener("touchmove", moveDrag);
       window.removeEventListener("mouseup", endDrag);
@@ -78,35 +74,42 @@ function DraggableSideNav() {
     };
   }, []);
 
+  const handleToggle = (e) => {
+    // Only toggle if we didn't just drag
+    if (!hasMoved.current) {
+      setNavVisible((v) => !v);
+    }
+  };
+
   return (
     <div
-      ref={navRef}
-      className={`mobile-side-nav ${navVisible ? "show" : "hide"}`}
-      style={{ position: "fixed", top: "50%", right: "20px", zIndex: 9999 }}
+      ref={wrapRef}
+      className="side-nav-wrapper"
+      style={{
+        position: "fixed",
+        top: "50%",
+        right: "20px",
+        zIndex: 9999,
+        transform: "translate(var(--drag-x, 0px), var(--drag-y, 0px))",
+        "--drag-x": "0px",
+        "--drag-y": "0px",
+      }}
     >
       {!noteHidden && (
-        <div
-          className="drag-me-note"
-          style={{
-            textAlign: "center",
-            fontSize: "0.85rem",
-            marginBottom: "8px",
-            color: "#06771f",
-            fontWeight: "bold",
-          }}
-        >
-          You can drag me!
+        <div className="drag-me-note">
+          drag me!
         </div>
       )}
 
       <button
         className="side-nav-toggle"
-        onClick={() => setNavVisible(!navVisible)}
+        onClick={handleToggle}
+        aria-label={navVisible ? "Close menu" : "Open menu"}
       >
         {navVisible ? "×" : "☰"}
       </button>
 
-      <div className="about-side-nav">
+      <div className={`about-side-nav ${navVisible ? "nav-open" : "nav-closed"}`}>
         <Navigation variant="side" />
       </div>
     </div>

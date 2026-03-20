@@ -6,19 +6,25 @@ import Projects from "./pages/projects";
 import Contact from "./pages/contact";
 import Resume from "./pages/resume";
 import CursorPencil from "./components/CursorPencil";
+import DoodleBackground from "./components/DoodleBackground";
+import ScatteredNotes from "./components/ScatteredNotes";
 import Loader from "./components/Loader";
 
 function App() {
   const location = useLocation();
   const [loading, setLoading] = useState(true);
 
-  // Re-trigger loader on every route change
   useEffect(() => {
     setLoading(true);
   }, [location.pathname]);
 
+  // Only show scattered notes on the home page
+  const isHome = location.pathname === "/";
+
   return (
     <>
+      <DoodleBackground />
+      {isHome && <ScatteredNotes />}
       <CursorPencil />
 
       {loading && <Loader onDone={() => setLoading(false)} />}
