@@ -10,10 +10,10 @@ const STICKY_TEXT = "Hope you have a nice wonderful day : )";
 const MODAL_TEXT  = "Hope you loved your self the way you give love to others";
 
 const MOBILE_NAV = [
-  { path: "/about",    label: "About",    Icon: Smile },
-  { path: "/projects", label: "Projects", Icon: Folder },
-  { path: "/contact",  label: "Contact",  Icon: Mail },
-  { path: "/resume",   label: "Resume",   Icon: GraduationCap },
+  { path: "/about",    label: "About me",  Icon: Smile,          rot: -8  },
+  { path: "/projects", label: "Projects",  Icon: Folder,         rot:  5  },
+  { path: "/contact",  label: "Contact",   Icon: Mail,           rot: -5  },
+  { path: "/resume",   label: "Resume",    Icon: GraduationCap,  rot:  7  },
 ];
 
 function TypewriterCursor({ current, total }) {
@@ -38,7 +38,7 @@ function Hero() {
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 768px)");
-    const handler = (e) => setIsMobile(e.matches);
+    const handler = e => setIsMobile(e.matches);
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
   }, []);
@@ -67,16 +67,17 @@ function Hero() {
   return (
     <section className="hero" aria-label="Hero section">
 
-      {/* ── Desktop: floating scattered icons ── */}
+      {/* ── Desktop only: floating scattered icons ── */}
       <div className="hero-desktop-nav">
         <Navigation variant="hero" />
       </div>
 
       {isMobile ? (
-        /* ══════ MOBILE LAYOUT ══════ */
+        /* ══════════════ MOBILE ══════════════ */
         <div className="hero-mobile-layout">
-          {/* Sticky note */}
-          <div className="hero-sticky-note">
+
+          {/* Sticky note — full width, top */}
+          <div className="hero-sticky-note mob-sticky">
             <p className="hero-sticky-note-text">
               {stickyTyped}
               <TypewriterCursor current={stickyTyped.length} total={STICKY_TEXT.length} />
@@ -87,32 +88,50 @@ function Hero() {
             </button>
           </div>
 
-          {/* 4 sticky notes in a 2×2 grid */}
+          {/* Scattered notes grid */}
           <ScatteredNotes mobile />
 
           {/* Main card */}
-          <div className="hero-card-wrap">
+          <div className="hero-card-wrap mob-card-wrap">
             <div className="hero-card">
               <h1>Welcome to my unorganized life</h1>
             </div>
             <div className="hero-signature">Charles@2026</div>
           </div>
 
-          {/* Viewer + download */}
+          {/* Nav icons scattered below the card */}
+          <div className="mob-nav-icons">
+            {MOBILE_NAV.map(({ path, label, Icon, rot }) => (
+              <button
+                key={path}
+                className="mob-nav-btn"
+                onClick={() => navigate(path)}
+                style={{ "--rot": `${rot}deg` }}
+              >
+                <span className="mob-nav-icon"><Icon size={24} strokeWidth={1.8} /></span>
+                <span className="mob-nav-label">{label}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Views + CV */}
           <div className="hero-bottom-row">
             {viewerCount !== null && (
-              <div className="viewer-badge" style={{position:"relative",bottom:"auto",left:"auto"}}>
+              <div className="viewer-badge" style={{ position:"relative", bottom:"auto", left:"auto" }}>
                 <Eye size={14} />
                 <span>{viewerCount.toLocaleString()} {viewerCount === 1 ? "view" : "views"}</span>
               </div>
             )}
-            <button type="button" className="hero-cv-btn" style={{position:"relative",bottom:"auto",right:"auto"}} onClick={handleDownloadCV}>
+            <button type="button" className="hero-cv-btn"
+              style={{ position:"relative", bottom:"auto", right:"auto" }}
+              onClick={handleDownloadCV}>
               Download CV
             </button>
           </div>
+
         </div>
       ) : (
-        /* ══════ DESKTOP LAYOUT ══════ */
+        /* ══════════════ DESKTOP ══════════════ */
         <>
           <ScatteredNotes />
 
@@ -147,20 +166,9 @@ function Hero() {
         </>
       )}
 
-      {/* ── Mobile bottom dock ── */}
-      <nav className="hero-mobile-dock" aria-label="Navigation">
-        {MOBILE_NAV.map(({ path, label, Icon }) => (
-          <button key={path} className="dock-item" onClick={() => navigate(path)}>
-            <span className="dock-icon"><Icon size={22} strokeWidth={1.8} /></span>
-            <span className="dock-label">{label}</span>
-          </button>
-        ))}
-      </nav>
-
-      {/* ── Love modal ── */}
+      {/* Love modal */}
       {showModal && (
-        <div
-          className="hero-love-modal-overlay"
+        <div className="hero-love-modal-overlay"
           onClick={() => setShowModal(false)}
           onKeyDown={e => e.key === "Escape" && setShowModal(false)}
           role="button" tabIndex={0} aria-label="Close modal"
