@@ -24,7 +24,7 @@ function Hero() {
   const modalTyped  = useTypewriter(MODAL_TEXT, 42, showModal);
 
   useEffect(() => {
-    fetch("https://api.counterapi.dev/v1/tsarles2026-portfolio/views/up")
+    fetch("https://api.counterapi.dev/v1/tsarles-portfolio-v2/views/up")
       .then((r) => r.json())
       .then((d) => setViewerCount(d.count))
       .catch(() => setViewerCount(null));
@@ -48,7 +48,7 @@ function Hero() {
     <section className="hero" aria-label="Hero section">
       <Navigation variant="hero" />
 
-      {/* Sticky note — always visible, pinned top-center on mobile */}
+      {/* ── Sticky note: sits above card on desktop, banner on mobile ── */}
       <div className="hero-sticky-note">
         <p className="hero-sticky-note-text">
           {stickyTyped}
@@ -65,19 +65,20 @@ function Hero() {
         </button>
       </div>
 
-      {/* Main card group */}
+      {/* ── Card group ── */}
       <div className="hero-card-wrap">
-        {/* Small accent note — desktop only */}
-        <div className="hero-sticky-accent">stay curious ✦</div>
+        {/* Accent note off the corner — desktop only */}
+        <div className="hero-sticky-accent" aria-hidden="true">stay curious ✦</div>
 
         <div className="hero-card">
           <h1>Welcome to my unorganized life</h1>
-          {/* Signature lives inside / below the card */}
-          <div className="hero-signature">Charles@2026</div>
         </div>
+
+        {/* ── Signature: BELOW the card, outside it ── */}
+        <div className="hero-signature" aria-hidden="true">Charles@2026</div>
       </div>
 
-      {/* Viewer count */}
+      {/* ── Viewer badge ── */}
       {viewerCount !== null && (
         <div className="viewer-badge">
           <Eye size={14} />
@@ -85,25 +86,18 @@ function Hero() {
         </div>
       )}
 
-      {/* CV Download */}
-      <button
-        type="button"
-        className="hero-cv-btn"
-        onClick={handleDownloadCV}
-        aria-label="Download CV"
-      >
+      {/* ── CV button ── */}
+      <button type="button" className="hero-cv-btn" onClick={handleDownloadCV}>
         Download CV
       </button>
 
-      {/* Love modal */}
+      {/* ── Love modal ── */}
       {showModal && (
         <div
           className="hero-love-modal-overlay"
           onClick={() => setShowModal(false)}
           onKeyDown={(e) => e.key === "Escape" && setShowModal(false)}
-          role="button"
-          tabIndex={0}
-          aria-label="Close modal"
+          role="button" tabIndex={0} aria-label="Close modal"
         >
           <div className="hero-love-modal" onClick={(e) => e.stopPropagation()}>
             <p className="hero-love-modal-text">
