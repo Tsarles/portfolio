@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { BriefcaseBusiness, Heart, Star, BookOpen, Utensils, Globe, ChevronRight } from "lucide-react";
+import { BriefcaseBusiness, Heart, Star, BookOpen, Utensils, Globe, ChevronRight, Cpu, Zap } from "lucide-react";
+import gsap from "gsap";
 import me from "../assets/me.jpg";
 import DraggableSideNav from "../components/DraggableSideNav";
 
@@ -24,8 +25,8 @@ const JOURNAL_SECTIONS = [
   {
     id: "learning",
     title: "Currently learning",
-    icon: Globe,
-    content: "Im learning Bahasa Indonesian right now! Languages are so cool. Also always learning new things in web dev.",
+    icon: Cpu,
+    content: "Diving deep into Machine Learning, learning how to automate things, applying AI stuff into my skill set — while also learning Bahasa Indonesia on the side!",
     color: "#d1fae5",
     rot: -2,
   },
@@ -86,16 +87,51 @@ function JournalCard({ section, flipped, onFlip }) {
   );
 }
 
+
 function About() {
   const [flipped, setFlipped] = useState({});
   const navigate = useNavigate();
+  const pageRef = useRef(null);
 
   const handleFlip = (id) => {
     setFlipped((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
+  // GSAP page entry
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".left-card", {
+        opacity: 0,
+        x: -50,
+        rotation: -6,
+        duration: 0.7,
+        delay: 0.15,
+        ease: "back.out(1.3)",
+      });
+      gsap.from(".right-card", {
+        opacity: 0,
+        x: 50,
+        rotation: 6,
+        duration: 0.7,
+        delay: 0.3,
+        ease: "back.out(1.3)",
+      });
+      gsap.from(".about-journal-card", {
+        opacity: 0,
+        y: 25,
+        scale: 0.9,
+        stagger: 0.08,
+        duration: 0.5,
+        delay: 0.5,
+        ease: "back.out(1.2)",
+      });
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="about-page">
+    <section className="about-page" ref={pageRef}>
 
       {/* ── LEFT CARD ── */}
       <div className="about-card left-card">
@@ -104,17 +140,17 @@ function About() {
             <img src={me} alt="My avatar" />
           </div>
           {/* Small decoration sticker */}
-          <div className="avatar-sticker">developer<br/>+ human</div>
+          <div className="avatar-sticker">developer<br />+ human</div>
         </div>
 
         <h2 className="about-name">Hi, I'm Charles!</h2>
-        <div className="about-handle">@Tsarles2026</div>
+        <div className="about-handle">@Cha2026</div>
 
         <p className="intro">
           Welcome to my about page. This is the personal side — a little journal about who I am, what I like, and what I'm up to.
         </p>
         <p className="description">
-          Sorry if it feels like too much — you can skip around. But if you're curious about the professional stuff, hit the button below.
+          Right now I'm obsessed with machine learning, automating things, and weaving AI into everything I build. Oh and I'm learning Bahasa Indonesia — slowly but surely!
         </p>
 
         <p className="about-hint-text">tap the cards to learn more</p>
@@ -133,7 +169,7 @@ function About() {
       {/* ── RIGHT CARD ── */}
       <div className="about-card right-card">
         <div className="journal-meta">
-          <span>Date: 2/7/2026</span>
+          <span>Date: 3/28/2026</span>
           <span>Time: Time of eternity</span>
         </div>
 

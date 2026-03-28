@@ -1,8 +1,42 @@
 import betYouCantImg from "../assets/images/bet-you-cant-preview.png";
 import paragraphPlaygroundImg from "../assets/images/paragraph-playground-preview.png";
 import portfolioV1Img from "../assets/images/portfolio-preview.png";
+import recallifyImg from "../assets/images/recallify-preview.png";
 
 export const projects = [
+  {
+    id: "recallify",
+    title: "Recallify",
+    description:
+      "A quiz study app — paste quiz text from ChatGPT, and Recallify turns it into an interactive flashcard deck with timers, scoring & review. No sign-up needed. Just paste and study.",
+    tech: ["React", "CSS", "JavaScript", "LocalStorage"],
+    link: "https://recallify-three.vercel.app/",
+    image: recallifyImg,
+    featured: true,
+    docs: {
+      overview:
+        "Recallify is a lightweight, browser-based study tool. Generate a quiz with ChatGPT, paste it in, and Recallify parses it into an interactive flashcard deck — complete with timers, scoring, shuffle, and review.",
+      features: [
+        "Paste-and-play: just paste quiz text from any AI",
+        "Auto-parses questions, choices, and answers",
+        "Timer-based study sessions with countdown",
+        "Score tracking and review mode",
+        "Up to 5 decks with local storage persistence",
+        "Shuffle-on-play for randomized review",
+        "30-day auto-archive for old decks",
+        "Fully responsive, hand-drawn aesthetic",
+      ],
+      howToUse: [
+        "Ask ChatGPT to generate a quiz on any topic",
+        "Copy the quiz text and paste it into Recallify",
+        "Click 'Create Deck' — your flashcards are ready",
+        "Hit play to start a timed study session",
+        "Review your score and retry as needed",
+      ],
+      stack:
+        "Built with React and vanilla CSS. No backend — everything runs in the browser with localStorage for deck persistence. GSAP handles animations. Hand-drawn UI with Fredoka and Nunito fonts.",
+    },
+  },
   {
     id: "bet-you-cant",
     title: "Bet You Can't",

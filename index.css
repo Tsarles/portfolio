@@ -1870,17 +1870,17 @@
    HERO SIGNATURE — sits below the card
 ════════════════════════════════════════════════ */
 .hero-signature {
-  font-family: "Dancing Script", cursive;
-  font-size: 1.6rem;
+  font-family: "Caveat", cursive;
+  font-size: 1.8rem;
   font-weight: 700;
   color: var(--green);
   text-align: center;
   margin-top: 14px;
-  opacity: 0.72;
+  opacity: 0.82;
   transform: rotate(-4deg);
   display: block;
   position: relative;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.03em;
 }
 .hero-signature::after {
   content: "";
@@ -2655,51 +2655,52 @@
   }
 
   .mob-nav-icons {
-    display: grid !important;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: center;
+    gap: 18px;
     width: 100%;
-    margin-top: 14px;
+    margin-top: 16px;
+    flex-wrap: wrap;
   }
 
+  /* Nav icon: just the icon box + label, identical to desktop style */
   .mob-nav-btn {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
-    background: var(--paper);
-    border: 3px solid var(--border);
-    border-radius: 14px;
-    padding: 10px 14px;
+    gap: 6px;
+    background: none;
+    border: none;
+    padding: 4px;
     cursor: pointer;
-    font-family: "Architects Daughter", cursive;
-    font-size: 13px;
-    color: var(--ink);
-    box-shadow: 4px 4px 0 var(--border);
-    transform: rotate(var(--rot, 0deg));
-    transition: transform 0.18s ease, box-shadow 0.18s ease;
     -webkit-tap-highlight-color: transparent;
-    width: 100%;
+    transform: rotate(var(--rot, 0deg));
+    transition: transform 0.18s ease;
+    justify-content: center;
   }
   .mob-nav-btn:active {
-    transform: rotate(var(--rot, 0deg)) scale(0.95);
-    box-shadow: 2px 2px 0 var(--border);
+    transform: rotate(var(--rot, 0deg)) scale(0.9);
   }
   .mob-nav-icon {
+    width: 68px;
+    height: 68px;
+    background: var(--paper);
+    border: 3px solid var(--border);
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: var(--paper-soft);
-    border: 2px solid rgba(0,0,0,0.15);
-    border-radius: 10px;
-    flex-shrink: 0;
+    box-shadow: 5px 5px 0 var(--border), 8px 8px 0 rgba(0,0,0,0.13);
+    color: var(--ink);
   }
   .mob-nav-label {
-    font-size: 12px;
-    line-height: 1.2;
-    text-align: left;
+    font-family: "Architects Daughter", cursive;
+    font-size: 11px;
+    color: var(--ink);
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
   }
 }
 
@@ -2796,5 +2797,196 @@
   .project-card, .contact-wrapper, .cv-section,
   .hero-card, .projects-title-card {
     animation: none !important;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   VERSION BADGE — top-left doodle note
+════════════════════════════════════════════════ */
+.version-badge {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 100;
+  background: #fff;
+  border: 2.5px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 6px 14px;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.06);
+  transform: rotate(-6deg);
+  cursor: default;
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+.version-badge:hover {
+  transform: rotate(-2deg) scale(1.08);
+}
+.version-badge-text {
+  font-family: "Caveat", cursive;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--green);
+  letter-spacing: 0.04em;
+}
+/* Tiny doodle dot decoration */
+.version-badge::before {
+  content: "●";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  color: #dc2626;
+  line-height: 1;
+}
+.version-badge::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  right: -3px;
+  width: 8px;
+  height: 8px;
+  border-width: 0 0 8px 8px;
+  border-style: solid;
+  border-color: transparent transparent rgba(0,0,0,0.08) transparent;
+}
+
+/* ════════════════════════════════════════════════
+   STICKY NOTE — improved design with tape
+════════════════════════════════════════════════ */
+.sticky-tape {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(2deg);
+  width: 60px;
+  height: 14px;
+  background: rgba(200, 200, 180, 0.55);
+  border-radius: 2px;
+  z-index: 1;
+  pointer-events: none;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+/* Override sticky note to have paper texture */
+.hero-sticky-note {
+  background: linear-gradient(135deg, #fef9c3 0%, #fdf6b0 60%, #fcf49b 100%) !important;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.08), inset 0 0 30px rgba(0,0,0,0.02) !important;
+}
+
+/* ════════════════════════════════════════════════
+   SKILL ROULETTE — interactive block on about page
+════════════════════════════════════════════════ */
+.skill-roulette {
+  margin-top: 20px;
+  padding: 16px 18px;
+  background: var(--paper-soft);
+  border: 3px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 5px 5px 0 var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transform: rotate(1deg);
+  transition: transform 0.2s ease;
+}
+.skill-roulette:hover {
+  transform: rotate(0deg) scale(1.01);
+}
+.skill-roulette-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "Architects Daughter", cursive;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--green);
+  font-weight: bold;
+}
+.skill-roulette-slot {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2.5px solid var(--border);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "Architects Daughter", cursive;
+  transition: background 0.15s ease;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.08);
+}
+.skill-roulette-emoji {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+.skill-roulette-name {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--ink);
+}
+.skill-roulette-btn {
+  padding: 8px 24px;
+  background: var(--green);
+  color: #fff;
+  border: 2.5px solid var(--border);
+  border-radius: 12px;
+  font-family: "Architects Daughter", cursive;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--border);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.skill-roulette-btn:hover:not(:disabled) {
+  transform: rotate(-2deg) scale(1.05);
+  box-shadow: 5px 5px 0 var(--border);
+}
+.skill-roulette-btn:active:not(:disabled) {
+  transform: scale(0.95);
+  box-shadow: 2px 2px 0 var(--border);
+}
+.skill-roulette-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ════════════════════════════════════════════════
+   MOBILE VERSION BADGE
+════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .version-badge {
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
+    transform: rotate(-4deg);
+    z-index: 300;
+  }
+  .version-badge-text {
+    font-size: 0.9rem;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   MOBILE STICKY NOTE TILT
+════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .hero-mobile-layout .hero-sticky-note {
+    transform: rotate(-2.5deg) !important;
+  }
+  .sticky-tape {
+    width: 45px;
+    height: 11px;
+    top: -5px;
+  }
+}
+
+/* ════════════════════════════════════════════════
+   MOBILE ABOUT PAGE RESPONSIVE FOR SKILL ROULETTE
+════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .skill-roulette {
+    transform: rotate(0deg);
+    margin-top: 16px;
   }
 }
