@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import DraggableSideNav from "../components/DraggableSideNav";
-import pdfFile from "../assets/images/CharlesCV.pdf";
+import pdfFile from "../assets/pdfs/CharlesCabralCV.pdf";
 
 
 /* ─────────────────────────────────────────────
@@ -44,7 +44,7 @@ function DownloadBtn() {
   return (
     <a
       href={pdfFile}
-      download="CharlesCV.pdf"
+      download="CharlesCabralCV.pdf"
       className="cv-download-btn"
     >
       <svg
@@ -178,8 +178,6 @@ function EducationSection() {
 /* ─────────────────────────────────────────────
    PAGE
 ───────────────────────────────────────────── */
-// ...existing code...
-
 export default function Resume() {
   useReveal();
 
