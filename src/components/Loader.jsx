@@ -1,16 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 
-/*
-  Signature SVG — hand-crafted bezier paths that spell out
-  "Tsarles" in a flowing cursive style, animated as if
-  a pen is signing the page.
-
-  We use pathLength="1" on each path so dashoffset animates
-  cleanly from 1 → 0 regardless of actual pixel length.
-*/
 
 export default function Loader({ onDone }) {
-  const [phase, setPhase] = useState("signing"); // "signing" | "fadeout"
+  const [phase, setPhase] = useState("signing"); 
   const svgRef = useRef(null);
 
   useEffect(() => {
