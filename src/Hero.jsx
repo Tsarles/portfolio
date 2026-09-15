@@ -53,7 +53,7 @@ export default function Hero() {
   useEffect(() => {
     fetch("https://api.counterapi.dev/v1/tsarles-portfolio-v2/views/up")
       .then(r => r.json())
-      .then(d => setViewerCount(d.count))
+      .then(d => setViewerCount(Number.isFinite(d.count) ? d.count : null))
       .catch(() => setViewerCount(null));
   }, []);
 
