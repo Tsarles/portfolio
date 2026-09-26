@@ -1,8 +1,6 @@
 import { useState } from "react";
 import DraggableSideNav from "../components/DraggableSideNav";
 
-const FORMSPREE_ID = "YOUR_FORM_ID";
-
 /* ── SVG ICONS ── */
 function InstagramIcon() {
   return (
@@ -40,7 +38,8 @@ export default function Contact() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  async function handleSubmit() {
+  async function handleSubmit(event) {
+    event.preventDefault();
     setStatus("sending");
     setErrorMsg("");
 
@@ -129,7 +128,7 @@ export default function Contact() {
             </div>
 
             {/* RIGHT — Formspree form */}
-            <div className="contact-right">
+            <form className="contact-right" onSubmit={handleSubmit}>
 
               {status === "error" && (
                 <div className="contact-error-banner">{errorMsg}</div>
@@ -146,6 +145,7 @@ export default function Contact() {
                   value={form.name}
                   onChange={handleChange}
                   autoComplete="name"
+                  required
                 />
               </div>
 
@@ -160,6 +160,7 @@ export default function Contact() {
                   value={form.email}
                   onChange={handleChange}
                   autoComplete="email"
+                  required
                 />
               </div>
 
@@ -172,19 +173,19 @@ export default function Contact() {
                   placeholder="What's on your mind?"
                   value={form.message}
                   onChange={handleChange}
+                  required
                 />
               </div>
 
               <button
                 className="contact-submit-btn"
-                onClick={handleSubmit}
                 disabled={
                   status === "sending" ||
                   !form.name.trim() ||
                   !form.email.trim() ||
                   !form.message.trim()
                 }
-                type="button"
+                type="submit"
               >
                 {status === "sending" ? (
                   <>
@@ -196,7 +197,7 @@ export default function Contact() {
                 )}
               </button>
 
-            </div>
+            </form>
           </div>
         )}
 

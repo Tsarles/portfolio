@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Archive, BookOpen, ExternalLink, Code2, X } from "lucide-react";
 import { projects, archivedProjects } from "../data/projectsData";
 import DraggableSideNav from "../components/DraggableSideNav";
@@ -60,16 +60,16 @@ function DocsModal({ project, onClose }) {
     );
   }, [project]);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     gsap.to(cardRef.current,    { opacity:0, scale:0.92, y:10, duration:0.2, ease:"power2.in", onComplete:onClose });
     gsap.to(overlayRef.current, { opacity:0, duration:0.2 });
-  };
+  }, [onClose]);
 
   useEffect(() => {
     const esc = e => { if (e.key === "Escape") handleClose(); };
     window.addEventListener("keydown", esc);
     return () => window.removeEventListener("keydown", esc);
-  }, []);
+  }, [handleClose]);
 
   if (!project?.docs) return null;
 

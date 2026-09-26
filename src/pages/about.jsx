@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import { ArrowRight, Code2, Sparkles, Cpu, Star } from "lucide-react";
+import { Code2, Cpu, Sparkles, Star } from "lucide-react";
 import gsap from "gsap";
 import me from "../assets/me.jpg";
 import DraggableSideNav from "../components/DraggableSideNav";
@@ -175,30 +174,8 @@ const SKILLS_PREVIEW = [
   { label: "React",      Icon: Code2     },
   { label: "JavaScript", Icon: Sparkles  },
   { label: "UI Design",  Icon: Star      },
-  { label: "AI & ML",   Icon: Cpu       },
+  { label: "IT Support", Icon: Cpu       },
 ];
-
-/* ─────────────────────────────────────────────
-   PROFESSIONAL MODE TOGGLE
-───────────────────────────────────────────── */
-function ProModeToggle({ isOn, onToggle }) {
-  return (
-    <button
-      type="button"
-      className={`about-pro-toggle${isOn ? " about-pro-toggle--on" : ""}`}
-      onClick={onToggle}
-      aria-pressed={isOn}
-      aria-label={isOn ? "Switch to personal mode" : "Switch to professional mode"}
-    >
-      <span className="pro-toggle-track">
-        <span className="pro-toggle-knob" />
-      </span>
-      <span className="pro-toggle-text">
-        {isOn ? "Professional Mode" : "Personal Mode"}
-      </span>
-    </button>
-  );
-}
 
 /* ─────────────────────────────────────────────
    STICKY NOTE CARD
@@ -334,9 +311,6 @@ function NoteModal({ note, onClose }) {
 ───────────────────────────────────────────── */
 export default function About() {
   const [openNote,    setOpenNote]    = useState(null);
-  const [proMode,     setProMode]     = useState(false);
-  const [transitioning, setTransitioning] = useState(false);
-  const navigate = useNavigate();
   const pageRef  = useRef(null);
   const leftRef  = useRef(null);
   const rightRef = useRef(null);
@@ -349,30 +323,9 @@ export default function About() {
       tl.from(rightRef.current, { opacity:0, x: 55, rotation: 7, duration:0.7 }, "-=0.5");
       tl.from(".about-sticky-note", { opacity:0, y:22, scale:0.88, stagger:0.07, duration:0.48, ease:"back.out(1.2)" }, "-=0.4");
       tl.from(".about-skill-chip",  { opacity:0, y:10, scale:0.9,  stagger:0.06, duration:0.38 }, "-=0.3");
-      tl.from(".about-pro-toggle",  { opacity:0, y: 8, scale:0.9,  duration:0.35 }, "-=0.25");
     }, pageRef);
     return () => ctx.revert();
   }, []);
-
-  // Professional mode toggle handler — animate page out, then navigate
-  const handleProToggle = () => {
-    if (transitioning) return;
-    const newMode = !proMode;
-
-    if (newMode) {
-      setTransitioning(true);
-      const targets = [leftRef.current, rightRef.current].filter(Boolean);
-      gsap.to(targets, {
-        opacity: 0, scale: 0.92, y: -20, duration: 0.35, ease: "power2.in",
-        onComplete: () => {
-          setTransitioning(false);
-          navigate("/resume");
-        },
-      });
-    } else {
-      setProMode(false);
-    }
-  };
 
   return (
     <section className="about-page" ref={pageRef} aria-label="About me">
@@ -407,33 +360,31 @@ export default function About() {
         </div>
 
         <p className="intro">
-          I'm the kind of person who's willing to do whatever it takes to build a better life. I'm still in the process of creating who I want to become — and I know that requires knowledge, patience, and continuous growth.
+          I'm Charles, a BSIT student in Quezon City who enjoys turning ideas into practical web apps and solving day-to-day computer problems.
         </p>
         <p className="description">
-          My goal is to use technology to help people, ease their struggles, and create solutions that make a meaningful difference. By helping others through innovation, I hope to contribute to a better future.
+          My experience covers React projects, databases, PC troubleshooting, technical documentation, customer support, and recruitment operations. I'm still exploring where I fit best, but I care most about useful work, clear systems, and steady improvement.
         </p>
 
         {/* Skills */}
         <div className="about-skills-row">
-          {SKILLS_PREVIEW.map(({ label, Icon }) => (
-            <div key={label} className="about-skill-chip">
-              <Icon size={13} strokeWidth={2} />
-              <span>{label}</span>
+          {SKILLS_PREVIEW.map((skill) => (
+            <div key={skill.label} className="about-skill-chip">
+              <skill.Icon size={13} strokeWidth={2} />
+              <span>{skill.label}</span>
             </div>
           ))}
         </div>
 
         <p className="about-hint-text">✦ tap the sticky notes to learn more ✦</p>
 
-        {/* ── PROFESSIONAL MODE TOGGLE — lives exclusively here ── */}
-        <ProModeToggle isOn={proMode} onToggle={handleProToggle} />
       </div>
 
       {/* ── RIGHT CARD — sticky notes ── */}
       <div className="about-card right-card" ref={rightRef}>
         <div className="journal-meta">
-          <span>Date: 3/28/2026</span>
-          <span>Time: Time of eternity</span>
+          <span>Personal notes</span>
+          <span>Still in progress</span>
         </div>
 
         <div className="about-notes-grid">

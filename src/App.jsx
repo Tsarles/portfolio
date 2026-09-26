@@ -1,34 +1,39 @@
-import { useState, useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { lazy, Suspense, useCallback, useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Hero from "./components/Hero";
-import About from "./pages/about";
-import Projects from "./pages/projects";
-import Contact from "./pages/contact";
-import Resume from "./pages/resume";
 import CursorPencil from "./components/CursorPencil";
 import DoodleBackground from "./components/DoodleBackground";
 import Loader from "./components/Loader";
 
-function App() {
-  const location = useLocation();
-  const [loading, setLoading] = useState(true);
+const About = lazy(() => import("./pages/about"));
+const Projects = lazy(() => import("./pages/projects"));
+const Contact = lazy(() => import("./pages/contact"));
 
-  useEffect(() => {
-    setLoading(true);
-  }, [location.pathname]);
+function App() {
+  const [loading, setLoading] = useState(
+    () => sessionStorage.getItem("portfolio-intro-seen") !== "true"
+  );
+
+  const finishLoading = useCallback(() => {
+    sessionStorage.setItem("portfolio-intro-seen", "true");
+    setLoading(false);
+  }, []);
 
   return (
     <>
       <DoodleBackground />
       <CursorPencil />
-      {loading && <Loader onDone={() => setLoading(false)} />}
-      <Routes>
-        <Route path="/"         element={<Hero />} />
-        <Route path="/about"    element={<About />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/contact"  element={<Contact />} />
-        <Route path="/resume"   element={<Resume />} />
-      </Routes>
+      {loading && <Loader onDone={finishLoading} />}
+      <Suspense fallback={<div className="route-loading" role="status">Opening page...</div>}>
+        <Routes>
+          <Route path="/" element={<Hero />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/resume" element={<Navigate to="/about" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
     </>
   );
 }

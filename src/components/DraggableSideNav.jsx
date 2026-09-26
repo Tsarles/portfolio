@@ -74,7 +74,7 @@ function DraggableSideNav() {
     };
   }, []);
 
-  const handleToggle = (e) => {
+  const handleToggle = () => {
     // Only toggle if we didn't just drag
     if (!hasMoved.current) {
       setNavVisible((v) => !v);

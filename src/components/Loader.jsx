@@ -6,9 +6,8 @@ export default function Loader({ onDone }) {
   const svgRef = useRef(null);
 
   useEffect(() => {
-    // Total signing animation takes ~2.4s, then we fade
-    const t1 = setTimeout(() => setPhase("fadeout"), 2600);
-    const t2 = setTimeout(() => { if (onDone) onDone(); }, 3300);
+    const t1 = setTimeout(() => setPhase("fadeout"), 1350);
+    const t2 = setTimeout(() => { if (onDone) onDone(); }, 1750);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [onDone]);
 
@@ -60,7 +59,7 @@ export default function Loader({ onDone }) {
           style={{
             strokeDasharray: 1,
             strokeDashoffset: 1,
-            animation: "sig-draw 0.6s cubic-bezier(0.4,0,0.2,1) 0.15s forwards",
+            animation: "sig-draw 0.35s cubic-bezier(0.4,0,0.2,1) 0.05s forwards",
           }}
         />
 
@@ -86,7 +85,7 @@ export default function Loader({ onDone }) {
           style={{
             strokeDasharray: 1,
             strokeDashoffset: 1,
-            animation: "sig-draw 0.55s cubic-bezier(0.4,0,0.2,1) 0.7s forwards",
+            animation: "sig-draw 0.3s cubic-bezier(0.4,0,0.2,1) 0.35s forwards",
           }}
         />
 
@@ -113,7 +112,7 @@ export default function Loader({ onDone }) {
           style={{
             strokeDasharray: 1,
             strokeDashoffset: 1,
-            animation: "sig-draw 0.55s cubic-bezier(0.4,0,0.2,1) 1.2s forwards",
+            animation: "sig-draw 0.3s cubic-bezier(0.4,0,0.2,1) 0.62s forwards",
           }}
         />
 
@@ -140,7 +139,7 @@ export default function Loader({ onDone }) {
           style={{
             strokeDasharray: 1,
             strokeDashoffset: 1,
-            animation: "sig-draw 0.65s cubic-bezier(0.4,0,0.2,1) 1.7s forwards",
+            animation: "sig-draw 0.35s cubic-bezier(0.4,0,0.2,1) 0.88s forwards",
           }}
         />
 
@@ -162,7 +161,7 @@ export default function Loader({ onDone }) {
           style={{
             strokeDasharray: 1,
             strokeDashoffset: 1,
-            animation: "sig-draw 0.5s cubic-bezier(0.4,0,0.2,1) 2.3s forwards",
+            animation: "sig-draw 0.25s cubic-bezier(0.4,0,0.2,1) 1.15s forwards",
           }}
         />
 
@@ -176,7 +175,7 @@ export default function Loader({ onDone }) {
           fill="#06771f"
           opacity="0"
           style={{
-            animation: "sig-label-in 0.4s ease 2.7s forwards",
+            animation: "sig-label-in 0.25s ease 1.25s forwards",
           }}
         >
           @Tsarles2026
@@ -189,7 +188,7 @@ export default function Loader({ onDone }) {
           display: "flex",
           gap: 8,
           opacity: 0,
-          animation: "sig-dots-in 0.3s ease 0.6s forwards",
+          animation: "sig-dots-in 0.2s ease 0.25s forwards",
         }}
       >
         {[0, 1, 2].map((i) => (
@@ -202,7 +201,7 @@ export default function Loader({ onDone }) {
               background: "#06771f",
               display: "block",
               opacity: 0.3,
-              animation: `sig-dot-pulse 1.1s ease-in-out ${0.6 + i * 0.18}s infinite`,
+              animation: `sig-dot-pulse 0.8s ease-in-out ${0.25 + i * 0.12}s infinite`,
             }}
           />
         ))}

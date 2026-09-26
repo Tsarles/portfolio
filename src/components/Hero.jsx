@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Heart, Eye, Smile, Folder, Mail, GraduationCap } from "lucide-react";
+import { Folder, Heart, Mail, Smile } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import Navigation from "./Navigation";
@@ -7,13 +7,12 @@ import ScatteredNotes from "./ScatteredNotes";
 import { useTypewriter } from "../hooks/useTypewriter";
 
 const STICKY_TEXT = "Hope you have a nice wonderful day : )";
-const MODAL_TEXT  = "Hope you loved your self the way you give love to others";
+const MODAL_TEXT  = "I hope you love yourself as much as you love others.";
 
 const MOBILE_NAV = [
   { path: "/about",    label: "About me",  Icon: Smile,          rot: -8 },
   { path: "/projects", label: "Projects",  Icon: Folder,         rot:  5 },
   { path: "/contact",  label: "Contact",   Icon: Mail,           rot: -5 },
-  { path: "/resume",   label: "Resume",    Icon: GraduationCap,  rot:  7 },
 ];
 
 function TypewriterCursor({ current, total }) {
@@ -26,9 +25,7 @@ export default function Hero() {
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches
   );
-  const [heartCount, setHeartCount]   = useState(null);
   const [showModal, setShowModal]     = useState(false);
-  const [viewerCount, setViewerCount] = useState(null);
   const [heartPopped, setHeartPopped] = useState(false);
 
   const stickyTyped = useTypewriter(STICKY_TEXT, 75, true);
@@ -47,25 +44,6 @@ export default function Hero() {
     const handler = e => setIsMobile(e.matches);
     mq.addEventListener("change", handler);
     return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  // Page view counter (intentional increment per visit)
-  useEffect(() => {
-    fetch("https://api.counterapi.dev/v1/tsarles-portfolio-v2/views/up")
-      .then(r => r.json())
-      .then(d => setViewerCount(Number.isFinite(d.count) ? d.count : null))
-      .catch(() => setViewerCount(null));
-  }, []);
-
-  // ✅ READ-ONLY heart count on load — never increments here
-  useEffect(() => {
-    fetch("https://api.counterapi.dev/v1/tsarles-portfolio-v2/hearts")
-      .then(r => r.json())
-      .then(d => setHeartCount(d.count ?? d.value ?? 0))
-      .catch(() => {
-        const saved = localStorage.getItem("portfolio-hearts");
-        setHeartCount(saved ? parseInt(saved, 10) : 0);
-      });
   }, []);
 
   // GSAP entrance animations
@@ -91,7 +69,6 @@ export default function Hero() {
     return () => ctx.revert();
   }, [isMobile]);
 
-  // ✅ Heart increments ONLY on explicit click
   const handleHeartClick = () => {
     if (heartPopped) return;
     setHeartPopped(true);
@@ -106,13 +83,6 @@ export default function Hero() {
       );
     }
 
-    fetch("https://api.counterapi.dev/v1/tsarles-portfolio-v2/hearts/up")
-      .then(r => r.json())
-      .then(d => setHeartCount(d.count ?? d.value))
-      .catch(() => setHeartCount(prev => (prev || 0) + 1));
-
-    const local = parseInt(localStorage.getItem("portfolio-hearts") || "0", 10) + 1;
-    localStorage.setItem("portfolio-hearts", local);
     setShowModal(true);
   };
 
@@ -121,7 +91,7 @@ export default function Hero() {
 
       {/* Version Badge */}
       <div className="version-badge" ref={versionRef}>
-        <span className="version-badge-text">v1.2</span>
+        <span className="version-badge-text">v1.3</span>
       </div>
 
       {/* Desktop floating nav icons */}
@@ -147,7 +117,6 @@ export default function Hero() {
               aria-label="Send love"
             >
               <Heart />
-              {heartCount ? <span className="hero-heart-count">{heartCount}</span> : null}
             </button>
           </div>
 
@@ -161,27 +130,18 @@ export default function Hero() {
           </div>
 
           <div className="mob-nav-icons">
-            {MOBILE_NAV.map(({ path, label, Icon, rot }) => (
+            {MOBILE_NAV.map((item) => (
               <button
-                key={path}
+                key={item.path}
                 className="mob-nav-btn"
-                onClick={() => navigate(path)}
-                style={{ "--rot": `${rot}deg` }}
+                onClick={() => navigate(item.path)}
+                style={{ "--rot": `${item.rot}deg` }}
               >
-                <span className="mob-nav-icon"><Icon size={24} strokeWidth={1.8} /></span>
-                <span className="mob-nav-label">{label}</span>
+                <span className="mob-nav-icon"><item.Icon size={24} strokeWidth={1.8} /></span>
+                <span className="mob-nav-label">{item.label}</span>
               </button>
             ))}
           </div>
-
-          {viewerCount !== null && (
-            <div className="hero-bottom-row">
-              <div className="viewer-badge" style={{ position:"relative", bottom:"auto", left:"auto" }}>
-                <Eye size={14} />
-                <span>{viewerCount.toLocaleString()} {viewerCount === 1 ? "view" : "views"}</span>
-              </div>
-            </div>
-          )}
 
         </div>
       ) : (
@@ -203,7 +163,6 @@ export default function Hero() {
               aria-label="Send love"
             >
               <Heart />
-              {heartCount ? <span className="hero-heart-count">{heartCount}</span> : null}
             </button>
           </div>
 
@@ -215,12 +174,6 @@ export default function Hero() {
             <div className="hero-signature" ref={signatureRef} aria-hidden="true">@Cha2026</div>
           </div>
 
-          {viewerCount !== null && (
-            <div className="viewer-badge">
-              <Eye size={14} />
-              <span>{viewerCount.toLocaleString()} {viewerCount === 1 ? "view" : "views"}</span>
-            </div>
-          )}
         </>
       )}
 
@@ -230,9 +183,15 @@ export default function Hero() {
           className="hero-love-modal-overlay"
           onClick={() => setShowModal(false)}
           onKeyDown={e => e.key === "Escape" && setShowModal(false)}
-          role="button" tabIndex={0} aria-label="Close modal"
+          role="presentation"
         >
-          <div className="hero-love-modal" onClick={e => e.stopPropagation()}>
+          <div
+            className="hero-love-modal"
+            onClick={e => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-label="A note about self-love"
+          >
             <p className="hero-love-modal-text">
               {modalTyped}
               <TypewriterCursor current={modalTyped.length} total={MODAL_TEXT.length} />

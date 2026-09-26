@@ -18,7 +18,7 @@ export function useTypewriter(fullText, speedMs, run) {
     }
     runRef.current = true;
     indexRef.current = 0;
-    setDisplay("");
+    const resetFrame = window.requestAnimationFrame(() => setDisplay(""));
 
     const id = setInterval(() => {
       if (indexRef.current >= fullText.length) {
@@ -29,7 +29,10 @@ export function useTypewriter(fullText, speedMs, run) {
       setDisplay(fullText.slice(0, indexRef.current));
     }, speedMs);
 
-    return () => clearInterval(id);
+    return () => {
+      window.cancelAnimationFrame(resetFrame);
+      clearInterval(id);
+    };
   }, [fullText, speedMs, run]);
 
   return display;

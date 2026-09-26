@@ -1,46 +1,46 @@
-import { Smile, Folder, Mail, GraduationCap, ArrowLeft } from "lucide-react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { ArrowLeft, Folder, Mail, Smile } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const NAV_CONFIG = [
   { path: "/about", label: "About me", icon: Smile, slotClass: "about" },
   { path: "/projects", label: "Projects", icon: Folder, slotClass: "projects" },
   { path: "/contact", label: "Contact", icon: Mail, slotClass: "contact" },
-  { path: "/resume", label: "Resume / CV", icon: GraduationCap, slotClass: "resume" },
 ];
 
 function Navigation({ variant = "hero" }) {
-  const navigate = useNavigate();
   const location = useLocation();
   const currentPath = location.pathname;
 
   if (variant === "side") {
     const isOnSubpage = currentPath !== "/";
     const others = NAV_CONFIG.filter((item) => item.path !== currentPath);
-    const label = (path) => (path === "/resume" ? "Resume" : NAV_CONFIG.find((c) => c.path === path)?.label ?? path);
+    const label = (path) => NAV_CONFIG.find((item) => item.path === path)?.label ?? path;
 
     return (
       <>
         {isOnSubpage && (
-          <div
+          <Link
             key="back"
+            to="/"
             className="icon-nav icon-nav-back back"
-            onClick={() => navigate("/")}
+            aria-label="Back to home"
           >
             <ArrowLeft />
             <span className="icon-label">Back</span>
-          </div>
+          </Link>
         )}
         {others.map((item) => {
           const Icon = item.icon;
           return (
-            <div
+            <Link
               key={item.path}
+              to={item.path}
               className={`icon-nav ${item.slotClass}`}
-              onClick={() => navigate(item.path)}
+              aria-label={label(item.path)}
             >
               <Icon />
               <span className="icon-label">{label(item.path)}</span>
-            </div>
+            </Link>
           );
         })}
       </>
@@ -52,14 +52,15 @@ function Navigation({ variant = "hero" }) {
       {NAV_CONFIG.map((item) => {
         const Icon = item.icon;
         return (
-          <div
+          <Link
             key={item.path}
+            to={item.path}
             className={`icon-nav ${item.slotClass}`}
-            onClick={() => navigate(item.path)}
+            aria-label={item.label}
           >
             <Icon />
-            <span className="icon-label">{item.path === "/resume" ? "Resume / CV" : item.label}</span>
-          </div>
+            <span className="icon-label">{item.label}</span>
+          </Link>
         );
       })}
     </>
