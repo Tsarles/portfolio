@@ -1,209 +1,52 @@
+import { Check, Clipboard, Github, Linkedin, Mail, MapPin, Send } from "lucide-react";
 import { useState } from "react";
-import DraggableSideNav from "../components/DraggableSideNav";
+import PageShell from "../components/PageShell";
 
-/* ── SVG ICONS ── */
-function InstagramIcon() {
-  return (
-    <svg className="contact-social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
-    </svg>
-  );
-}
-function LinkedInIcon() {
-  return (
-    <svg className="contact-social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-      <rect x="2" y="9" width="4" height="12" />
-      <circle cx="4" cy="4" r="2" />
-    </svg>
-  );
-}
-function MailIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 18, height: 18, color: "var(--green)", flexShrink: 0 }}>
-      <rect x="2" y="4" width="20" height="16" rx="2" />
-      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-    </svg>
-  );
-}
+const email = "charles.cabral700@gmail.com";
 
 export default function Contact() {
-  const [form, setForm]     = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState("idle"); 
-  const [errorMsg, setErrorMsg] = useState("");
+  const [copied, setCopied] = useState(false);
 
-  function handleChange(e) {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
+  const copyEmail = async () => {
+    await navigator.clipboard.writeText(email);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1800);
+  };
 
-  async function handleSubmit(event) {
+  const submit = (event) => {
     event.preventDefault();
-    setStatus("sending");
-    setErrorMsg("");
-
-    try {
-      const res = await fetch(`https://formspree.io/f/xnnqydqo`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(form),
-      });
-
-      if (res.ok) {
-        setStatus("success");
-        setForm({ name: "", email: "", message: "" });
-      } else {
-        const data = await res.json();
-        setErrorMsg(data?.errors?.[0]?.message || "Something went wrong. Try again!");
-        setStatus("error");
-      }
-    } catch {
-      setErrorMsg("Network error — check your connection.");
-      setStatus("error");
-    }
-  }
+    const data = new FormData(event.currentTarget);
+    const subject = encodeURIComponent(`Portfolio message from ${data.get("name")}`);
+    const body = encodeURIComponent(`${data.get("message")}\n\nFrom: ${data.get("name")} (${data.get("email")})`);
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+  };
 
   return (
-    <>
-    <div className="contact-page">
-      <div className="contact-wrapper">
-
-        {/* ── HEADER BAND ── */}
-        <div className="contact-header-band">
-          <h1>Contact Me</h1>
+    <PageShell pageClass="contact-v2" label="Contact Charles Cabral">
+      <section className="contact-board" data-reveal>
+        <div className="contact-card paper-panel">
+          <span className="availability-stamp">Open to opportunities</span>
+          <span className="eyebrow marker-blue">Let’s connect</span>
+          <h1>Let’s build something useful.</h1>
+          <p>For internships, IT support, web projects, or a good conversation—send me a note.</p>
+          <div className="contact-links">
+            <a href={`mailto:${email}`}><Mail /> <span>{email}</span></a>
+            <a href="https://www.linkedin.com/in/charles-andrew-cabral-564282280/" target="_blank" rel="noreferrer"><Linkedin /> <span>LinkedIn</span></a>
+            <a href="https://github.com/Tsarles" target="_blank" rel="noreferrer"><Github /> <span>github.com/Tsarles</span></a>
+            <span><MapPin /> Quezon City, Philippines</span>
+          </div>
+          <button className="copy-key" type="button" onClick={copyEmail}>{copied ? <Check /> : <Clipboard />} {copied ? "Copied" : "Copy email"}</button>
         </div>
 
-        {/* ── SUCCESS ── */}
-        {status === "success" ? (
-          <div className="contact-success">
-            <h2>Message sent!</h2>
-            <p>Thanks for reaching out — I'll get back to you as soon as I can!</p>
-            <button className="contact-success-back" onClick={() => setStatus("idle")}>
-              Send another
-            </button>
-          </div>
-        ) : (
-
-          /* ── TWO-COLUMN BODY ── */
-          <div className="contact-body">
-
-            {/* LEFT — Get in Touch */}
-            <div className="contact-left">
-              <h2 className="contact-left-title">Get in Touch</h2>
-
-              <div className="contact-info-block">
-                <span className="contact-info-label">Find my Email</span>
-                <span className="contact-info-value" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <MailIcon />
-                  charles.cabral700@gmail.com
-                </span>
-              </div>
-
-              <p className="contact-divider-text">— or —</p>
-
-              <div className="contact-info-block">
-                <span className="contact-info-label">Contact me through my socials</span>
-                <div className="contact-socials">
-                  <a
-                    className="contact-social-link"
-                    href="https://www.instagram.com/sitsarls/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <InstagramIcon />
-                    Instagram
-                  </a>
-                  <a
-                    className="contact-social-link"
-                    href="https://www.linkedin.com/in/charles-andrew-cabral-564282280/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <LinkedInIcon />
-                    LinkedIn
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* RIGHT — Formspree form */}
-            <form className="contact-right" onSubmit={handleSubmit}>
-
-              {status === "error" && (
-                <div className="contact-error-banner">{errorMsg}</div>
-              )}
-
-              <div className="contact-field">
-                <label className="contact-label" htmlFor="c-name">Name</label>
-                <input
-                  id="c-name"
-                  className="contact-input"
-                  type="text"
-                  name="name"
-                  placeholder="Your name"
-                  value={form.name}
-                  onChange={handleChange}
-                  autoComplete="name"
-                  required
-                />
-              </div>
-
-              <div className="contact-field">
-                <label className="contact-label" htmlFor="c-email">Email</label>
-                <input
-                  id="c-email"
-                  className="contact-input"
-                  type="email"
-                  name="email"
-                  placeholder="you@example.com"
-                  value={form.email}
-                  onChange={handleChange}
-                  autoComplete="email"
-                  required
-                />
-              </div>
-
-              <div className="contact-field">
-                <label className="contact-label" htmlFor="c-message">Message</label>
-                <textarea
-                  id="c-message"
-                  className="contact-textarea"
-                  name="message"
-                  placeholder="What's on your mind?"
-                  value={form.message}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <button
-                className="contact-submit-btn"
-                disabled={
-                  status === "sending" ||
-                  !form.name.trim() ||
-                  !form.email.trim() ||
-                  !form.message.trim()
-                }
-                type="submit"
-              >
-                {status === "sending" ? (
-                  <>
-                    <span className="contact-btn-spinner" />
-                    Sending...
-                  </>
-                ) : (
-                  "Send Message"
-                )}
-              </button>
-
-            </form>
-          </div>
-        )}
-
-      </div>
-    </div>
-    <DraggableSideNav />
-    </>
+        <div className="envelope-form">
+          <form className="message-paper" onSubmit={submit}>
+            <label>Your name<input name="name" required autoComplete="name" /></label>
+            <label>Your email<input name="email" type="email" required autoComplete="email" /></label>
+            <label>Your message<textarea name="message" rows="5" required /></label>
+            <button className="big-key big-key-green send-key" type="submit">Send note <Send /></button>
+          </form>
+        </div>
+      </section>
+    </PageShell>
   );
 }

@@ -11,6 +11,7 @@ export const projects = [
       "A quiz study app — paste quiz text from ChatGPT, and Recallify turns it into an interactive flashcard deck with timers, scoring & review. No sign-up needed. Just paste and study.",
     tech: ["React", "CSS", "JavaScript", "LocalStorage"],
     link: "https://recallify-three.vercel.app/",
+    github: "https://github.com/Tsarles/recallify",
     image: recallifyImg,
     featured: true,
     docs: {
@@ -35,6 +36,8 @@ export const projects = [
       ],
       stack:
         "Built with React and vanilla CSS. No backend — everything runs in the browser with localStorage for deck persistence. GSAP handles animations. Hand-drawn UI with Fredoka and Nunito fonts.",
+      challenge:
+        "Parsing AI-generated quiz text reliably while keeping the study flow fast, clear, and usable on mobile devices.",
     },
   },
   {
@@ -64,6 +67,8 @@ export const projects = [
         "Tap 'I did it!' or 'I failed 😭' to log your result",
       ],
       stack: "Built with plain React and CSS, no backend or database needed. State is managed locally via useState, and results persist in localStorage so your streak survives a refresh.",
+      challenge:
+        "Making randomized challenges feel immediate and replayable without letting the interface get in the way of the game.",
     },
   },
   {
@@ -74,6 +79,10 @@ export const projects = [
     tech: ["HTML", "CSS", "JavaScript"],
     link: "https://fanciful-monstera-32ba5d.netlify.app/",
     image: paragraphPlaygroundImg,
+    docs: {
+      overview: "A playful browser experiment where cursor movement influences and gradually pulls apart text on the page.",
+      challenge: "Translating pointer movement into an interaction that feels playful while keeping the paragraph readable before the effect begins.",
+    },
   },
 ];
 
@@ -85,6 +94,7 @@ export const archivedProjects = [
       "My very first portfolio site. A simpler, static HTML/CSS page where I first tried to put myself online. Looking back it's a little rough, but it was the start of everything.",
     tech: ["HTML", "CSS", "JavaScript"],
     link: "",
+    github: "https://github.com/Tsarles/portfolio",
     year: "2024",
     image: portfolioV1Img,
   },

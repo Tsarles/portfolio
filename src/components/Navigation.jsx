@@ -1,70 +1,47 @@
-import { ArrowLeft, Folder, Mail, Smile } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { BookOpen, Folder, Home, Mail, UserRound } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
-const NAV_CONFIG = [
-  { path: "/about", label: "About me", icon: Smile, slotClass: "about" },
-  { path: "/projects", label: "Projects", icon: Folder, slotClass: "projects" },
-  { path: "/contact", label: "Contact", icon: Mail, slotClass: "contact" },
+const items = [
+  { path: "/", label: "Home", Icon: Home, color: "green" },
+  { path: "/about", label: "About", Icon: UserRound, color: "blue" },
+  { path: "/projects", label: "Projects", Icon: Folder, color: "yellow" },
+  { path: "/notes", label: "Notes", Icon: BookOpen, color: "red" },
+  { path: "/contact", label: "Contact", Icon: Mail, color: "cream" },
 ];
 
-function Navigation({ variant = "hero" }) {
-  const location = useLocation();
-  const currentPath = location.pathname;
-
-  if (variant === "side") {
-    const isOnSubpage = currentPath !== "/";
-    const others = NAV_CONFIG.filter((item) => item.path !== currentPath);
-    const label = (path) => NAV_CONFIG.find((item) => item.path === path)?.label ?? path;
-
-    return (
-      <>
-        {isOnSubpage && (
-          <Link
-            key="back"
-            to="/"
-            className="icon-nav icon-nav-back back"
-            aria-label="Back to home"
-          >
-            <ArrowLeft />
-            <span className="icon-label">Back</span>
-          </Link>
-        )}
-        {others.map((item) => {
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`icon-nav ${item.slotClass}`}
-              aria-label={label(item.path)}
-            >
-              <Icon />
-              <span className="icon-label">{label(item.path)}</span>
-            </Link>
-          );
-        })}
-      </>
-    );
-  }
-
+export default function Navigation() {
   return (
     <>
-      {NAV_CONFIG.map((item) => {
-        const Icon = item.icon;
-        return (
-          <Link
+      <nav className="key-nav" aria-label="Primary navigation">
+        <span className="key-nav-brand" aria-hidden="true">CHA</span>
+        {items.map((item) => (
+          <NavLink
             key={item.path}
             to={item.path}
-            className={`icon-nav ${item.slotClass}`}
-            aria-label={item.label}
+            end={item.path === "/"}
+            className={({ isActive }) => `keycap keycap-${item.color}${isActive ? " active" : ""}`}
           >
-            <Icon />
-            <span className="icon-label">{item.label}</span>
-          </Link>
-        );
-      })}
+            <item.Icon aria-hidden="true" />
+            <span>{item.label}</span>
+          </NavLink>
+        ))}
+      </nav>
+
+      <nav className="mobile-key-nav" aria-label="Mobile navigation">
+        <span className="mobile-grab" aria-hidden="true" />
+        {items.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            end={item.path === "/"}
+            aria-label={item.label}
+            className={({ isActive }) => `mobile-key keycap-${item.color}${isActive ? " active" : ""}`}
+          >
+            <item.Icon aria-hidden="true" />
+            <span>{item.label}</span>
+          </NavLink>
+        ))}
+      </nav>
     </>
   );
 }
-
-export default Navigation;
