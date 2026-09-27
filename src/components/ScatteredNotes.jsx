@@ -2,25 +2,25 @@ const DESKTOP_NOTES = [
   { t: "Halo Semuanya",                       x: 1,  y: 9,  r: -10, c: "#dcecff", s: 13, d: 5.8, dl: 0   },
   { t: "Cha",                                  x: 86, y: 8,  r:  8,  c: "#cfe8ff", s: 26, d: 5.2, dl: 0.6 },
   { t: "Salamat po",                           x: 1,  y: 56, r: -5,  c: "#c7ead6", s: 12, d: 5.6, dl: 1.0 },
-  { t: "Selamat datang!",                      x: 82, y: 72, r:  8,  c: "#ffe3e3", s: 12, d: 6.0, dl: 0.4 },
+  { t: "Selamat datang!",                      x: 82, y: 72, r:  8,  c: "#f7a69e", s: 12, d: 6.0, dl: 0.4 },
   { t: "I wanted to try\nseashell foods\nbut cant : ((",
-                                               x: 87, y: 37, r: -6,  c: "#ffd8d2", s: 11, d: 6.8, dl: 1.8 },
+                                               x: 87, y: 37, r: -6,  c: "#ef8f85", s: 11, d: 6.8, dl: 1.8 },
   { t: "still figuring\nthings out :)",        x: 1,  y: 32, r:  5,  c: "#cfe8ff", s: 12, d: 5.0, dl: 0.8 },
   { t: "be happy!",                            x: 15, y: 3,  r: -8,  c: "#c7ead6", s: 13, d: 4.8, dl: 0.3 },
-  { t: "made with\nlove :)",                   x: 68, y: 91, r: -3,  c: "#ffd8d2", s: 11, d: 6.3, dl: 2.0 },
+  { t: "made with\nlove :)",                   x: 68, y: 91, r: -3,  c: "#ef8f85", s: 11, d: 6.3, dl: 2.0 },
 ];
 
 // All 8 notes shown on mobile in two columns, each tilted differently
 const MOBILE_NOTES = [
-  { t: "Halo Semuanya",                        r: -5, c: "#fef9c3" },
+  { t: "Halo Semuanya",                        r: -5, c: "#c7ead6" },
   { t: "Cha",                                  r:  6, c: "#cfe8ff" },
   { t: "Salamat po",                           r: -3, c: "#d1fae5" },
-  { t: "Selamat datang!",                      r:  7, c: "#fef9c3" },
+  { t: "Selamat datang!",                      r:  7, c: "#cfe8ff" },
   { t: "still figuring\nthings out :)",        r: -6, c: "#e0f2fe" },
   { t: "be happy!",                            r:  4, c: "#d1fae5" },
   { t: "I wanted to try\nseashell foods\nbut cant : ((",
-                                               r: -4, c: "#ffd8d2" },
-  { t: "made with love :)",                    r:  5, c: "#ffd8d2" },
+                                               r: -4, c: "#f7a69e" },
+  { t: "made with love :)",                    r:  5, c: "#ef8f85" },
 ];
 
 const KF = `
