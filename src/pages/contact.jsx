@@ -26,9 +26,8 @@ export default function Contact() {
       <section className="contact-board" data-reveal>
         <div className="contact-card paper-panel">
           <span className="availability-stamp">Open to opportunities</span>
-          <span className="eyebrow marker-blue">Let’s connect</span>
-          <h1>Let’s build something useful.</h1>
-          <p>For internships, IT support, web projects, or a good conversation—send me a note.</p>
+          <h1>You can reach me here.</h1>
+          <p>I’m available for internships, IT support work, administrative roles, and web projects.</p>
           <div className="contact-links">
             <a href={`mailto:${email}`}><Mail /> <span>{email}</span></a>
             <a href="https://www.linkedin.com/in/charles-andrew-cabral-564282280/" target="_blank" rel="noreferrer"><Linkedin /> <span>LinkedIn</span></a>

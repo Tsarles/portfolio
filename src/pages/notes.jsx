@@ -4,24 +4,22 @@ import PageShell from "../components/PageShell";
 const notes = [
   { title: "What building Recallify taught me", topic: "Projects", status: "Draft" },
   { title: "Learning Bahasa, one conversation at a time", topic: "Learning", status: "Planned" },
-  { title: "Small projects still count", topic: "Growth", status: "Planned" },
 ];
 
 export default function Notes() {
   return (
     <PageShell pageClass="notes-v2" label="Field Notes">
       <header className="page-heading" data-reveal>
-        <span className="eyebrow marker-red">Thoughts in progress</span>
         <h1>Field Notes</h1>
-        <p>Lessons from building, learning, fixing, and figuring things out.</p>
+        <p>Notes I’m writing about projects and things I’m learning.</p>
       </header>
 
       <section className="notes-board paper-panel" data-reveal>
         <div className="notes-intro">
           <BookOpen aria-hidden="true" />
           <div>
-            <h2>A simple journal first.</h2>
-            <p>I’m keeping this lightweight until I have something worth publishing consistently. No login system or empty admin dashboard—just honest notes when they are ready.</p>
+            <h2>Nothing published yet.</h2>
+            <p>I’m drafting the first post about rebuilding Recallify from local-only storage into something that works across devices.</p>
           </div>
         </div>
         <div className="note-list">

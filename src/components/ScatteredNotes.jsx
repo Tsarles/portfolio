@@ -1,26 +1,26 @@
 const DESKTOP_NOTES = [
-  { t: "Halo Semuanya",                       x: 2,  y: 10, r: -10, c: "#fef9c3", s: 13, d: 6.0, dl: 0   },
-  { t: "Cha",                                  x: 83, y: 7,  r:  8,  c: "#fce7f3", s: 26, d: 5.5, dl: 0.6 },
-  { t: "Salamat po",                           x: 1,  y: 54, r: -5,  c: "#d1fae5", s: 12, d: 5.8, dl: 1.0 },
-  { t: "Selamat datang!",                      x: 77, y: 70, r:  8,  c: "#fef9c3", s: 12, d: 6.2, dl: 0.4 },
+  { t: "Halo Semuanya",                       x: 1,  y: 9,  r: -10, c: "#fff1a9", s: 13, d: 5.8, dl: 0   },
+  { t: "Cha",                                  x: 86, y: 8,  r:  8,  c: "#cfe8ff", s: 26, d: 5.2, dl: 0.6 },
+  { t: "Salamat po",                           x: 1,  y: 56, r: -5,  c: "#c7ead6", s: 12, d: 5.6, dl: 1.0 },
+  { t: "Selamat datang!",                      x: 82, y: 72, r:  8,  c: "#fff1a9", s: 12, d: 6.0, dl: 0.4 },
   { t: "I wanted to try\nseashell foods\nbut cant : ((",
-                                               x: 84, y: 36, r: -6,  c: "#fce7f3", s: 11, d: 7.0, dl: 1.8 },
-  { t: "still figuring\nthings out :)",        x: 1,  y: 32, r:  5,  c: "#e0f2fe", s: 12, d: 5.2, dl: 0.8 },
-  { t: "be happy!",                            x: 14, y: 3,  r: -8,  c: "#d1fae5", s: 13, d: 5.0, dl: 0.3 },
-  { t: "made with\nlove :)",                   x: 66, y: 90, r: -3,  c: "#fce7f3", s: 11, d: 6.5, dl: 2.0 },
+                                               x: 87, y: 37, r: -6,  c: "#ffd8d2", s: 11, d: 6.8, dl: 1.8 },
+  { t: "still figuring\nthings out :)",        x: 1,  y: 32, r:  5,  c: "#cfe8ff", s: 12, d: 5.0, dl: 0.8 },
+  { t: "be happy!",                            x: 15, y: 3,  r: -8,  c: "#c7ead6", s: 13, d: 4.8, dl: 0.3 },
+  { t: "made with\nlove :)",                   x: 68, y: 91, r: -3,  c: "#ffd8d2", s: 11, d: 6.3, dl: 2.0 },
 ];
 
 // All 8 notes shown on mobile in two columns, each tilted differently
 const MOBILE_NOTES = [
   { t: "Halo Semuanya",                        r: -5, c: "#fef9c3" },
-  { t: "Cha",                                  r:  6, c: "#fce7f3" },
+  { t: "Cha",                                  r:  6, c: "#cfe8ff" },
   { t: "Salamat po",                           r: -3, c: "#d1fae5" },
   { t: "Selamat datang!",                      r:  7, c: "#fef9c3" },
   { t: "still figuring\nthings out :)",        r: -6, c: "#e0f2fe" },
   { t: "be happy!",                            r:  4, c: "#d1fae5" },
   { t: "I wanted to try\nseashell foods\nbut cant : ((",
-                                               r: -4, c: "#fce7f3" },
-  { t: "made with love :)",                    r:  5, c: "#fce7f3" },
+                                               r: -4, c: "#ffd8d2" },
+  { t: "made with love :)",                    r:  5, c: "#ffd8d2" },
 ];
 
 const KF = `
@@ -80,7 +80,7 @@ export default function ScatteredNotes({ mobile = false }) {
 
   return (
     <div aria-hidden="true" style={{
-      position:"fixed", inset:0, zIndex:1,
+      position:"fixed", inset:0, zIndex:0,
       pointerEvents:"none", overflow:"hidden",
     }}>
       <style>{KF}</style>

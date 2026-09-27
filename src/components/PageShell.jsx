@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import Navigation from "./Navigation";
+import ScatteredNotes from "./ScatteredNotes";
 
 export default function PageShell({ children, pageClass = "", label }) {
   const root = useRef(null);
@@ -23,8 +24,7 @@ export default function PageShell({ children, pageClass = "", label }) {
   return (
     <div className={`site-shell ${pageClass}`} ref={root}>
       <Navigation />
-      <div className="ambient-note ambient-note-one" aria-hidden="true">small steps<br />still count</div>
-      <div className="ambient-note ambient-note-two" aria-hidden="true">ideas → drafts<br />→ better ideas</div>
+      <ScatteredNotes />
       <main className="page-canvas" aria-label={label}>{children}</main>
     </div>
   );

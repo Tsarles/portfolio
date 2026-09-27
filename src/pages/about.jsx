@@ -34,9 +34,8 @@ export default function About() {
   return (
     <PageShell pageClass="about-v2" label="About Charles Cabral">
       <header className="page-heading" data-reveal>
-        <span className="eyebrow marker-red">Profile evidence</span>
         <h1>Case File: Cha</h1>
-        <p>A closer look at the work, interests, and paths I’m exploring.</p>
+        <p>The things I can do, the work I’m aiming for, and what I’m learning next.</p>
       </header>
 
       <section className="case-folder" data-reveal>
@@ -83,7 +82,6 @@ export default function About() {
           <section className="cert-section" aria-labelledby="cert-title">
             <div className="section-title-row">
               <div>
-                <span className="eyebrow">Credential check</span>
                 <h2 id="cert-title">Certifications</h2>
               </div>
               <BadgeCheck aria-hidden="true" />

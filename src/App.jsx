@@ -1,5 +1,6 @@
 import { lazy, Suspense, useCallback, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import CursorPencil from "./components/CursorPencil";
 import Loader from "./components/Loader";
 
 const Hero = lazy(() => import("./components/Hero"));
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <>
+      <CursorPencil />
       {loading && <Loader onDone={finishLoading} />}
       <Suspense fallback={<div className="route-loading" role="status">Opening the folder...</div>}>
         <Routes>

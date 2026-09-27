@@ -26,7 +26,6 @@ export default function Projects() {
   return (
     <PageShell pageClass="projects-v2" label="Projects">
       <header className="page-heading" data-reveal>
-        <span className="eyebrow marker-blue">Built, tested, learned</span>
         <h1>Project Folders</h1>
         <p>Open a folder to see the problem, process, and result behind each build.</p>
       </header>
