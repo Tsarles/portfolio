@@ -3,10 +3,10 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const items = [
-  { path: "/", label: "Home", Icon: Home, color: "blue" },
-  { path: "/about", label: "About", Icon: UserRound, color: "red" },
-  { path: "/projects", label: "Projects", Icon: Folder, color: "navy" },
-  { path: "/notes", label: "Notes", Icon: BookOpen, color: "blue" },
+  { path: "/", label: "Home", Icon: Home, color: "green" },
+  { path: "/about", label: "About", Icon: UserRound, color: "blue" },
+  { path: "/projects", label: "Projects", Icon: Folder, color: "red" },
+  { path: "/notes", label: "Notes", Icon: BookOpen, color: "green" },
   { path: "/contact", label: "Contact", Icon: Mail, color: "cream" },
 ];
 

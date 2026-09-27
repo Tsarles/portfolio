@@ -1,18 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Kalam:wght@400;700&family=Nunito:wght@500;600;700;800;900&display=swap");
 
 :root {
-  --ink: #10233f;
-  --green: #1f6feb;
-  --green-dark: #123b72;
-  --mint: #d7ebff;
+  --ink: #102f27;
+  --green: #06771f;
+  --green-dark: #064c2b;
+  --mint: #cfeeda;
   --blue: #5da9ff;
   --blue-light: #e6f2ff;
   --red: #ef5a5a;
   --red-light: #ffe3e3;
   --cream: #ffffff;
   --paper: #ffffff;
-  --grid: rgba(31, 111, 235, 0.12);
-  --shadow: 7px 8px 0 rgba(16, 35, 63, 0.18);
+  --grid: rgba(6, 119, 31, 0.12);
+  --shadow: 7px 8px 0 rgba(16, 47, 39, 0.18);
   color: var(--ink);
   background: var(--paper);
   font-family: "Nunito", system-ui, sans-serif;
@@ -135,9 +135,10 @@ img { display: block; max-width: 100%; }
 .keycap:hover { transform: translateY(-2px); box-shadow: 0 9px 0 #071d17, 0 12px 0 rgba(16,47,39,.18); }
 .keycap:active .keycap-top, .keycap.active .keycap-top { transform: translateY(5px); }
 .keycap.active { box-shadow: 0 3px 0 #071d17, 0 5px 0 rgba(16,47,39,.18); filter: saturate(1.12); }
+.keycap-green { --key-color: #bfe6cc; }
 .keycap-blue { --key-color: #b9ddff; }
 .keycap-red { --key-color: #ffb9b0; }
-.keycap-navy { --key-color: #7fa9df; }
+.keycap-navy { --key-color: #9ad2ad; }
 .keycap-cream { --key-color: var(--cream); }
 .keycap-settings { --key-color: #c6dbf7; padding: 0; cursor: pointer; }
 .keycap-tooltip {
@@ -222,7 +223,7 @@ img { display: block; max-width: 100%; }
 .nav-drag-toggle input { position: absolute; opacity: 0; pointer-events: none; }
 .nav-drag-toggle > span { width: 52px; height: 29px; position: relative; border: 3px solid var(--ink); border-radius: 20px; background: #d7deea; transition: background .18s ease; }
 .nav-drag-toggle > span::after { content: ""; position: absolute; left: 3px; top: 3px; width: 17px; height: 17px; border-radius: 50%; background: var(--ink); transition: transform .18s ease; }
-.nav-drag-toggle input:checked + span { background: var(--blue); }
+.nav-drag-toggle input:checked + span { background: var(--green); }
 .nav-drag-toggle input:checked + span::after { transform: translateX(23px); }
 .nav-drag-toggle input:focus-visible + span { outline: 4px solid var(--blue); outline-offset: 3px; }
 .nav-reset { grid-column: 1/-1; display: inline-flex; width: max-content; align-items: center; gap: 8px; padding: 9px 13px; border: 2px solid var(--ink); border-radius: 12px; background: var(--blue-light); box-shadow: 3px 3px 0 var(--ink); font-weight: 900; cursor: pointer; }
@@ -289,7 +290,7 @@ img { display: block; max-width: 100%; }
 .hand-line { display: inline-block; margin: 24px 0 30px; font: 700 clamp(1.25rem,2.4vw,1.8rem) "Kalam", cursive; border-bottom: 7px solid var(--blue); transform: rotate(-1deg); }
 .hero-actions { display: flex; gap: 18px; flex-wrap: wrap; }
 .hero-profile { position: relative; display: grid; justify-items: center; }
-.polaroid { width: min(310px,100%); margin: 0; padding: 13px 13px 16px; overflow: hidden; background: white; border: 4px solid var(--ink); border-radius: 24px; box-shadow: 7px 8px 0 var(--blue-light), 11px 12px 0 var(--ink); transform: rotate(3deg); }
+.polaroid { width: min(310px,100%); margin: 0; padding: 13px 13px 16px; overflow: hidden; background: white; border: 4px solid var(--ink); border-radius: 24px; box-shadow: 7px 8px 0 var(--mint), 11px 12px 0 var(--ink); transform: rotate(3deg); }
 .polaroid img { width: 100%; aspect-ratio: 4/4.45; object-fit: cover; object-position: center 61%; border-radius: 14px; filter: saturate(.94) contrast(1.02); }
 .polaroid figcaption { text-align: center; margin-top: 11px; font: 700 1.25rem "Kalam", cursive; }
 .profile-tags { display: grid; margin: -8px -20px 0 auto; position: relative; z-index: 2; }
@@ -299,8 +300,8 @@ img { display: block; max-width: 100%; }
 .profile-tags span:nth-child(3) { background: var(--red-light); transform: translateX(-5px) rotate(-1deg); }
 .profile-tags svg { width: 17px; }
 /* About */
-.case-folder { position: relative; display: grid; grid-template-columns: .88fr 1.12fr; gap: 28px; max-width: 1120px; margin: 54px auto 0; padding: 42px 34px 34px; background: #d9eaff; border: 4px solid var(--ink); border-radius: 24px; box-shadow: var(--shadow); }
-.folder-tab { position: absolute; top: -42px; left: 25px; width: 270px; padding: 11px 22px 7px; background: #d9eaff; border: 4px solid var(--ink); border-bottom: 0; border-radius: 20px 20px 0 0; font: 700 .9rem "Kalam", cursive; }
+.case-folder { position: relative; display: grid; grid-template-columns: .88fr 1.12fr; gap: 28px; max-width: 1120px; margin: 54px auto 0; padding: 42px 34px 34px; background: #d9f0df; border: 4px solid var(--ink); border-radius: 24px; box-shadow: var(--shadow); }
+.folder-tab { position: absolute; top: -42px; left: 25px; width: 270px; padding: 11px 22px 7px; background: #d9f0df; border: 4px solid var(--ink); border-bottom: 0; border-radius: 20px 20px 0 0; font: 700 .9rem "Kalam", cursive; }
 .case-left, .case-right { min-width: 0; }
 .case-left { display: grid; grid-template-columns: 170px 1fr; gap: 20px; align-content: start; padding: 24px; background: #fff; border: 3px solid var(--ink); border-radius: 22px; }
 .case-photo { margin: 0; padding: 9px; overflow: hidden; align-self: start; background: white; border: 3px solid var(--ink); border-radius: 20px; box-shadow: 4px 5px 0 var(--ink); transform: rotate(-2deg); }
@@ -344,10 +345,10 @@ img { display: block; max-width: 100%; }
 .project-folder { position: relative; min-height: 285px; padding: 43px 17px 18px; text-align: left; border: 4px solid var(--ink); border-radius: 20px 20px 24px 24px; box-shadow: var(--shadow); cursor: pointer; transition: transform .22s ease, box-shadow .22s ease; }
 .project-folder:hover { transform: translateY(-7px) rotate(-.5deg); box-shadow: 10px 13px 0 rgba(16,47,39,.22); }
 .project-folder::before { content: ""; position: absolute; left: -4px; top: -29px; width: 55%; height: 31px; background: inherit; border: 4px solid var(--ink); border-bottom: 0; border-radius: 15px 15px 0 0; }
-.folder-yellow { background: #b9d9ff; }
+.folder-yellow { background: #c9ead4; }
 .folder-blue { background: #cfe5fb; }
 .folder-red { background: #ffd0c9; }
-.folder-green { background: #9fc5f4; }
+.folder-green { background: #a9dbba; }
 .folder-label { position: absolute; z-index: 1; left: 16px; top: -23px; max-width: 50%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 700 1rem "Kalam", cursive; }
 .project-folder img { width: 100%; aspect-ratio: 16/8.5; object-fit: cover; border: 3px solid var(--ink); border-radius: 16px; background: white; }
 .folder-tech { display: block; margin: 12px 0 10px; font-size: .74rem; font-weight: 900; }
@@ -386,7 +387,7 @@ img { display: block; max-width: 100%; }
 .notes-intro p { margin: 5px 0 0; max-width: 720px; line-height: 1.55; }
 .note-list { display: grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap: 22px; padding-top: 34px; }
 .field-note { min-height: 250px; display: flex; flex-direction: column; align-items: flex-start; padding: 23px; border: 3px solid var(--ink); border-radius: 20px; box-shadow: 5px 6px 0 var(--ink); }
-.field-note-1 { background: #cfe5fb; transform: rotate(-1deg); }
+.field-note-1 { background: #cfeeda; transform: rotate(-1deg); }
 .field-note-2 { background: var(--blue-light); transform: rotate(1deg); }
 .field-note-3 { background: var(--red-light); transform: rotate(-.5deg); }
 .field-note > span { padding: 4px 8px; background: white; border: 2px solid var(--ink); font-size: .68rem; font-weight: 900; text-transform: uppercase; }
@@ -409,7 +410,7 @@ img { display: block; max-width: 100%; }
 .contact-links a > span { min-width: 0; overflow-wrap: anywhere; }
 .copy-key { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border: 3px solid var(--ink); background: var(--blue-light); box-shadow: 3px 4px 0 var(--ink); font-weight: 900; cursor: pointer; }
 .copy-key svg { width: 18px; }
-.envelope-form { position: relative; padding: 25px; background: var(--blue-light); border: 4px solid var(--ink); border-radius: 24px; box-shadow: var(--shadow); }
+.envelope-form { position: relative; padding: 25px; background: var(--mint); border: 4px solid var(--ink); border-radius: 24px; box-shadow: var(--shadow); }
 .envelope-form::before { content: ""; position: absolute; left: 22px; right: 22px; top: 16px; height: 3px; background: var(--ink); transform: rotate(-4deg); opacity: .35; }
 .message-paper { position: relative; display: grid; gap: 17px; padding: 34px; background: #fff; border: 3px solid var(--ink); border-radius: 20px; background-image: linear-gradient(transparent 31px, rgba(93,169,255,.22) 32px); background-size: 100% 32px; }
 .message-paper label { display: grid; gap: 5px; font: 700 1rem "Kalam", cursive; }
