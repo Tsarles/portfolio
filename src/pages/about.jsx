@@ -1,7 +1,7 @@
 import { ArrowDownToLine, BadgeCheck, Bike, BookOpen, BriefcaseBusiness, Database, Languages, MonitorCog } from "lucide-react";
 import PageShell from "../components/PageShell";
-import me from "../assets/me.jpg";
-import resume from "../assets/pdfs/CharlesCabralCV.pdf";
+import me from "../assets/cha-about.png";
+import resume from "../assets/pdfs/CharlesAndrewSCabralResume.pdf";
 
 const careerPaths = [
   { icon: MonitorCog, label: "IT Support" },

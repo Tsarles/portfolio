@@ -3,8 +3,8 @@ import { ArrowDownToLine, ArrowUpRight, Bike, Heart, Languages, MonitorCog, X } 
 import { Link } from "react-router-dom";
 import gsap from "gsap";
 import PageShell from "./PageShell";
-import me from "../assets/me.jpg";
-import resume from "../assets/pdfs/CharlesCabralCV.pdf";
+import me from "../assets/cha-home.png";
+import resume from "../assets/pdfs/CharlesAndrewSCabralResume.pdf";
 import { useTypewriter } from "../hooks/useTypewriter";
 
 const STICKY_TEXT = "Hope you have a nice wonderful day : )";

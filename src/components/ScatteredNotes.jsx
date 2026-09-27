@@ -1,8 +1,8 @@
 const DESKTOP_NOTES = [
-  { t: "Halo Semuanya",                       x: 1,  y: 9,  r: -10, c: "#fff1a9", s: 13, d: 5.8, dl: 0   },
+  { t: "Halo Semuanya",                       x: 1,  y: 9,  r: -10, c: "#dcecff", s: 13, d: 5.8, dl: 0   },
   { t: "Cha",                                  x: 86, y: 8,  r:  8,  c: "#cfe8ff", s: 26, d: 5.2, dl: 0.6 },
   { t: "Salamat po",                           x: 1,  y: 56, r: -5,  c: "#c7ead6", s: 12, d: 5.6, dl: 1.0 },
-  { t: "Selamat datang!",                      x: 82, y: 72, r:  8,  c: "#fff1a9", s: 12, d: 6.0, dl: 0.4 },
+  { t: "Selamat datang!",                      x: 82, y: 72, r:  8,  c: "#ffe3e3", s: 12, d: 6.0, dl: 0.4 },
   { t: "I wanted to try\nseashell foods\nbut cant : ((",
                                                x: 87, y: 37, r: -6,  c: "#ffd8d2", s: 11, d: 6.8, dl: 1.8 },
   { t: "still figuring\nthings out :)",        x: 1,  y: 32, r:  5,  c: "#cfe8ff", s: 12, d: 5.0, dl: 0.8 },
